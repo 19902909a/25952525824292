@@ -69,13 +69,13 @@ export const PremiumBorders = () => {
       {/* Montagne, Marmottes & Ruisseau (Bord Gauche) */}
       <div className="absolute top-0 bottom-0 left-0 w-[15vw] min-w-[200px] border-r border-emerald-500/20 bg-[linear-gradient(90deg,rgba(16,185,129,0.15)_0%,transparent_100%)]">
         {/* Silhouette de montagne */}
-        <div className="absolute top-1/4 -left-20 w-64 h-96 bg-emerald-500/50 rounded-[100px] rotate-45 blur-xl shadow-[0_0_50px_rgba(16,185,129,0.4)]" />
-        <div className="absolute top-1/2 -left-10 w-48 h-72 bg-teal-400/50 rounded-[80px] -rotate-12 blur-lg shadow-[0_0_40px_rgba(45,212,191,0.4)]" />
+        <div className="absolute top-1/4 left-10 w-64 h-96 bg-emerald-500/80 rounded-[100px] rotate-45 blur-sm shadow-[0_0_50px_rgba(16,185,129,0.4)]" />
+        <div className="absolute top-1/2 left-20 w-48 h-72 bg-teal-400/80 rounded-[80px] -rotate-12 blur-sm shadow-[0_0_40px_rgba(45,212,191,0.4)]" />
         {/* Ruisseau animée */}
         <motion.div 
           animate={{ backgroundPosition: ['0% 0%', '0% 100%'] }}
           transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
-          className="absolute top-0 bottom-0 right-10 w-12 blur-md mix-blend-screen opacity-80 shadow-[0_0_30px_rgba(56,189,248,0.8)]"
+          className="absolute top-0 bottom-0 left-32 w-12 blur-sm mix-blend-screen opacity-90 shadow-[0_0_30px_rgba(56,189,248,0.8)]"
           style={{ backgroundImage: 'linear-gradient(180deg, transparent, #38bdf8, transparent)', backgroundSize: '100% 200%' }}
         />
         {/* Chutes de feuilles (Vent) */}
@@ -85,33 +85,33 @@ export const PremiumBorders = () => {
       {/* Ville Cyberpunk & Jardin Public (Bord Droit) */}
       <div className="absolute top-0 bottom-0 right-0 w-[15vw] min-w-[200px] border-l border-fuchsia-500/20 bg-[linear-gradient(-90deg,rgba(236,72,153,0.15)_0%,transparent_100%)]">
         {/* Gratte-ciels (blocs) */}
-        <div className="absolute bottom-0 -right-10 w-32 h-[60vh] bg-indigo-600/60 rounded-t-3xl blur-lg shadow-[0_0_40px_rgba(79,70,229,0.5)]" />
-        <div className="absolute bottom-0 right-10 w-24 h-[40vh] bg-fuchsia-600/50 rounded-t-2xl blur-md shadow-[0_0_30px_rgba(217,70,239,0.5)]" />
+        <div className="absolute bottom-0 right-4 w-32 h-[60vh] bg-indigo-600/80 rounded-t-3xl blur-sm shadow-[0_0_40px_rgba(79,70,229,0.5)]" />
+        <div className="absolute bottom-0 right-20 w-24 h-[40vh] bg-fuchsia-600/80 rounded-t-2xl blur-sm shadow-[0_0_30px_rgba(217,70,239,0.5)]" />
         {/* Routes lumineuses (Trafic) */}
         <motion.div 
           animate={{ y: ['100vh', '-20vh'] }}
           transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
-          className="absolute right-20 w-2 h-32 bg-gradient-to-t from-transparent via-cyan-300 to-transparent blur-[1px] shadow-[0_0_20px_rgba(103,232,249,1)]"
+          className="absolute right-12 w-2 h-32 bg-gradient-to-t from-transparent via-cyan-300 to-transparent blur-none shadow-[0_0_20px_rgba(103,232,249,1)]"
         />
         <motion.div 
           animate={{ y: ['-20vh', '100vh'] }}
           transition={{ duration: 4, repeat: Infinity, ease: "linear", delay: 1.5 }}
-          className="absolute right-12 w-2 h-32 bg-gradient-to-b from-transparent via-pink-400 to-transparent blur-[1px] shadow-[0_0_20px_rgba(244,114,182,1)]"
+          className="absolute right-24 w-2 h-32 bg-gradient-to-b from-transparent via-pink-400 to-transparent blur-none shadow-[0_0_20px_rgba(244,114,182,1)]"
         />
         {/* Jardin public (particules d'énergie) */}
-        <div className="absolute bottom-20 right-0 left-0 h-64 bg-emerald-500/30 blur-2xl rounded-full mix-blend-screen" />
+        <div className="absolute bottom-20 right-0 left-0 h-64 bg-emerald-500/50 blur-xl rounded-full mix-blend-screen" />
         {particles.map(p => <Particle key={p.id} {...p} x={`${p.x}%`} y={`${p.y}%`} />)}
       </div>
 
       {/* Herbes & Vent (Bas) */}
-      <div className="absolute bottom-0 left-0 right-0 h-[20vh] bg-gradient-to-t from-green-700/40 to-transparent flex items-end justify-around overflow-hidden px-[10vw]">
+      <div className="absolute bottom-0 left-0 right-0 h-[20vh] bg-gradient-to-t from-green-700/60 to-transparent flex items-end justify-around overflow-hidden px-[10vw]">
         {Array.from({ length: 80 }).map((_, i) => (
           <motion.div
             key={`grass-${i}`}
             animate={{ rotate: [-5, 10, -5] }}
             transition={{ duration: 2 + Math.random() * 2, repeat: Infinity, ease: "easeInOut", delay: Math.random() }}
-            className="w-1.5 bg-gradient-to-t from-emerald-600 to-green-400 rounded-t-full origin-bottom blur-[0px] shadow-[0_0_5px_rgba(74,222,128,0.5)]"
-            style={{ height: `${30 + Math.random() * 80}px`, opacity: 0.6 + Math.random() * 0.4 }}
+            className="w-2 bg-gradient-to-t from-emerald-500 to-green-300 rounded-t-full origin-bottom shadow-[0_0_10px_rgba(74,222,128,0.8)]"
+            style={{ height: `${40 + Math.random() * 80}px`, opacity: 0.8 + Math.random() * 0.2 }}
           />
         ))}
       </div>

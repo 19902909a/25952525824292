@@ -107,7 +107,7 @@ user_problem_statement: "Verify the hero section layout in RootLandingPage.js. W
 frontend:
   - task: "Hero section width adjustment to 70%"
     implemented: true
-    working: false
+    working: true
     file: "/app/frontend/src/pages/RootLandingPage.js"
     stuck_count: 0
     priority: "high"
@@ -116,6 +116,9 @@ frontend:
       - working: false
         agent: "testing"
         comment: "Tested on desktop (1920x1080). Line 334 has 'md:w-[70%]' but also 'max-w-5xl' which caps width at 1024px. Actual width is 53.33% (1024px) instead of 70% (1344px). The max-w-5xl constraint is preventing the section from reaching 70% width. Need to either remove max-w-5xl or increase it to allow 70% width on large screens."
+      - working: true
+        agent: "testing"
+        comment: "Re-tested on desktop (1920x1080) after max-w-5xl removal. Hero section width is now EXACTLY 1344px (70.00% of viewport). Line 334 now shows 'mx-auto w-[95%] md:w-[70%]' without max-w-5xl constraint. Both primary and secondary CTA buttons are fully visible and within viewport. Layout is robust and properly centered. All requirements met."
   
   - task: "Hero section padding for thin borders"
     implemented: true
@@ -168,12 +171,11 @@ frontend:
 metadata:
   created_by: "testing_agent"
   version: "1.0"
-  test_sequence: 2
+  test_sequence: 3
   run_ui: true
 
 test_plan:
-  current_focus:
-    - "Hero section width adjustment to 70%"
+  current_focus: []
   stuck_tasks: []
   test_all: false
   test_priority: "high_first"
@@ -181,3 +183,5 @@ test_plan:
 agent_communication:
   - agent: "testing"
     message: "Completed testing of RootLandingPage.js hero section on desktop (1920x1080). FINDINGS: ✅ Padding (17px) creates thin borders - PASS. ✅ Video height (300px) meets min-h-[300px] - PASS. ✅ Buttons fully visible - PASS. ✅ Layout is solid and centered - PASS. ❌ Section width is 53.33% instead of 70% due to max-w-5xl constraint on line 334 - NEEDS FIX. The max-w-5xl (1024px) is preventing the section from reaching 70% width (1344px) on large screens. Recommend removing max-w-5xl or increasing to max-w-7xl to allow full 70% width."
+  - agent: "testing"
+    message: "Re-verified hero section width after max-w-5xl removal. CONFIRMED: ✅ Hero section width is now EXACTLY 1344px (70.00% of 1920px viewport) - PASS. ✅ Both primary and secondary CTA buttons are fully visible and within viewport - PASS. ✅ Layout is robust and properly centered - PASS. ✅ All 3 highlight links are visible - PASS. ✅ No console errors - PASS. The max-w-5xl constraint has been successfully removed from line 334. All hero section requirements are now met."

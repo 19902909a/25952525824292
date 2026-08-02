@@ -1,0 +1,38 @@
+{
+  "name": "Lovanet",
+  "version": "1.0.0",
+  "last_optimized": "2026-08-02",
+  "description": "Fichier de stabilisation Lovanet pour VS Code, GitHub et projets externes. Ce fichier garantit que les mises à jour n'altèrent pas les performances du site.",
+  "environments": {
+    "node": ">=18.0.0",
+    "python": ">=3.9.0"
+  },
+  "optimizations": {
+    "frontend": {
+      "build_command": "yarn build",
+      "cache_clear": "rm -rf node_modules/.cache",
+      "performance_flags": "--production --minify",
+      "post_update": "yarn install --frozen-lockfile && yarn build"
+    },
+    "backend": {
+      "build_command": "pip install -r requirements.txt",
+      "cache_clear": "find . -type d -name __pycache__ -exec rm -r {} +",
+      "post_update": "pip install -r requirements.txt && supervisorctl restart backend"
+    }
+  },
+  "vs_code_settings": {
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "files.trimTrailingWhitespace": true,
+    "javascript.updateImportsOnFileMove.enabled": "always",
+    "typescript.updateImportsOnFileMove.enabled": "always"
+  },
+  "github_actions": {
+    "validation_checks": [
+      "Dependency check",
+      "Build size limit check",
+      "Asset optimization verification"
+    ]
+  },
+  "instructions_pour_projet_externe": "Pour stabiliser le projet après un 'git pull', lisez ce fichier JSON, exécutez les commandes 'post_update' respectives pour le frontend et le backend, puis purgez le cache via 'cache_clear' pour éviter les ralentissements."
+}

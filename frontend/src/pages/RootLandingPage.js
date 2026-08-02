@@ -338,7 +338,7 @@ export default function RootLandingPage() {
             <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(135deg,rgba(255,255,255,0.08),transparent_35%,transparent_65%,rgba(255,255,255,0.03))]" />
             <div
               ref={bannerShellRef}
-              className="hero-banner-3d relative overflow-hidden rounded-[1.25rem] min-h-[250px] sm:min-h-[300px] w-full"
+              className="hero-banner-3d relative overflow-hidden rounded-[1.25rem] min-h-[300px] sm:min-h-[380px] lg:min-h-[420px] w-full"
               data-testid="root-landing-hero-banner-shell"
             >
               {heroBanner && heroBanner.visible !== false ? (
@@ -436,7 +436,7 @@ export default function RootLandingPage() {
                 )}
               </div>
 
-              <div className="hero-banner-content relative flex min-h-[250px] sm:min-h-[300px] flex-col justify-end p-4 sm:p-6 lg:p-8 z-30 pointer-events-none">
+              <div className="hero-banner-content relative flex min-h-[300px] sm:min-h-[380px] lg:min-h-[420px] flex-col justify-end p-4 sm:p-6 lg:p-8 z-30 pointer-events-none">
                 <div className="flex flex-row flex-wrap gap-2 pointer-events-auto" data-testid="hero-banner-bottom-primary-buttons">
                   <Button asChild size="sm" className="btn-neon-rainbow h-8 rounded-full px-4 text-[10px] sm:text-xs font-semibold text-white/90 backdrop-blur-md border border-white/20 bg-black/30 hover:bg-black/40" data-testid="home-hero-primary-cta-button">
                     <Link to={heroPrimary.to}>

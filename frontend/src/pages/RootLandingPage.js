@@ -338,7 +338,7 @@ export default function RootLandingPage() {
             <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(135deg,rgba(255,255,255,0.08),transparent_35%,transparent_65%,rgba(255,255,255,0.03))]" />
             <div
               ref={bannerShellRef}
-              className="hero-banner-3d relative overflow-hidden rounded-[1.25rem] min-h-[380px]"
+              className="hero-banner-3d relative overflow-hidden rounded-[1.25rem] min-h-[380px] w-full md:w-[70%] mx-auto ring-1 ring-white/10 shadow-2xl"
               data-testid="root-landing-hero-banner-shell"
             >
               {heroBanner && heroBanner.visible !== false ? (

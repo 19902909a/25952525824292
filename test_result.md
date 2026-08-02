@@ -101,3 +101,59 @@
 #====================================================================================================
 # Testing Data - Main Agent and testing sub agent both should log testing data below this section
 #====================================================================================================
+
+user_problem_statement: "Verify the homepage layout. The main hero banner video should have its height restored so buttons are visible, and its width horizontally reduced by about 30% (around 70% width) and centered. Check if it looks correct on desktop without breaking layout."
+
+frontend:
+  - task: "Hero banner video width adjustment"
+    implemented: true
+    working: false
+    file: "/app/frontend/src/components/HeroCarousel.tsx"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: false
+        agent: "testing"
+        comment: "Tested on desktop (1920x1080). Current width is 55.04% (lg:w-[58%] class), but should be ~70%. The video banner is properly centered and height (593px) is sufficient - video player controls are visible. Need to change line 510 from 'lg:w-[58%]' to 'lg:w-[70%]'."
+  
+  - task: "Hero banner video height and button visibility"
+    implemented: true
+    working: true
+    file: "/app/frontend/src/components/HeroCarousel.tsx"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "testing"
+        comment: "Video height is 593px which is sufficient. Video player controls (mute, CC, settings, fullscreen buttons) are visible at the top right of the video player. Height is working correctly."
+  
+  - task: "Hero banner centering"
+    implemented: true
+    working: true
+    file: "/app/frontend/src/components/HeroCarousel.tsx"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "testing"
+        comment: "Banner is properly centered on desktop. The flex container with 'items-center justify-center' is working correctly."
+
+metadata:
+  created_by: "testing_agent"
+  version: "1.0"
+  test_sequence: 1
+  run_ui: true
+
+test_plan:
+  current_focus:
+    - "Hero banner video width adjustment"
+  stuck_tasks: []
+  test_all: false
+  test_priority: "high_first"
+
+agent_communication:
+  - agent: "testing"
+    message: "Completed testing of hero banner layout on desktop (1920x1080). Found that width needs adjustment from 58% to 70%. Height and centering are working correctly. Video player controls are visible. See detailed findings in status_history."

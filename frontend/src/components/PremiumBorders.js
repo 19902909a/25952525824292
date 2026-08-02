@@ -58,7 +58,7 @@ export const PremiumBorders = () => {
   })), []);
 
   return (
-    <div className="fixed inset-0 pointer-events-none z-[-5] overflow-hidden bg-[#050914]">
+    <div className="fixed inset-0 pointer-events-none z-[0] overflow-hidden">
       {/* Ciel & Nuages (Haut) */}
       <div className="absolute top-0 left-0 right-0 h-[40vh] bg-gradient-to-b from-blue-600/30 via-indigo-600/10 to-transparent">
         <Cloud delay={0} y="5%" duration={40} scale={1} />

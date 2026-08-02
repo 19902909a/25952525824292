@@ -102,14 +102,14 @@
 # Testing Data - Main Agent and testing sub agent both should log testing data below this section
 #====================================================================================================
 
-user_problem_statement: "Verify that the 3D background elements from Premium3DBorders render correctly on the website without breaking the layout. These should appear in the left and right margins of the viewport on wide screens (desktop) and shouldn't block any interaction. Look for a mountain/stream on the left, cityscape on the right, and grass/stars in the background."
+user_problem_statement: "Verify that the CSS/framer-motion based 2.5D decoration system in PremiumBorders.js renders correctly on the website without breaking the layout. These should appear clearly visible in the left and right margins of the viewport on wide screens (desktop) and shouldn't block any interaction. Look for mountain shapes and flying leaves on the left, cyberpunk buildings with neon road lines and glowing particles on the right, clouds on top, and grass on bottom."
 
 frontend:
-  - task: "Premium3DBorders component renders with WebGL"
+  - task: "PremiumBorders component renders with CSS/framer-motion"
     implemented: true
     working: false
-    file: "/app/frontend/src/components/Premium3DBorders.jsx"
-    stuck_count: 2
+    file: "/app/frontend/src/components/PremiumBorders.js"
+    stuck_count: 3
     priority: "high"
     needs_retesting: false
     status_history:
@@ -122,11 +122,14 @@ frontend:
       - working: false
         agent: "testing"
         comment: "RE-TESTED after latest changes (MeshBasicMaterial, scale 1.5, positions x=-18 and x=18). ROOT CAUSE IDENTIFIED: ❌ 3D elements are positioned OUTSIDE the camera's field of view. TECHNICAL VERIFICATION: ✅ Canvas renders correctly (1920x1080 full viewport). ✅ WebGL2 active. ✅ All materials switched to MeshBasicMaterial. ✅ Scale increased to 1.5. ✅ Elements positioned at x=-18 (left) and x=18 (right). CAMERA FRUSTUM CALCULATION: Camera at [0,0,10] with FOV 75° viewing elements at z=-5 (15 units away). At this distance, horizontal view width ≈ 23 units (x=-11.5 to x=11.5). Elements at x=±18 are OUTSIDE this range by ~6.5 units. VISUAL EVIDENCE: ❌ Left edge (0-400px): Completely dark, NO mountain/stream visible. ❌ Right edge (1520-1920px): Completely dark, NO cityscape visible. ❌ Bottom: NO grass visible. SOLUTION REQUIRED: Move elements to x=±8 to x=±10 range, OR adjust camera FOV/position, OR reposition elements closer to viewport edges in screen space rather than 3D space."
+      - working: false
+        agent: "testing"
+        comment: "TESTED NEW CSS/FRAMER-MOTION IMPLEMENTATION. Main agent switched from WebGL to CSS/framer-motion based system. TECHNICAL VERIFICATION: ✅ PremiumBorders.js component found and rendering. ✅ Container has correct classes (fixed inset-0 pointer-events-none z-[-5]). ✅ Position: fixed, Z-index: -5, Pointer-events: none. ✅ Left border: 288px wide (15vw). ✅ Right border: 288px wide (15vw). ✅ Top area: 432px high (40vh). ✅ Bottom area: 216px high (20vh). ✅ 105 total divs rendered, 55 absolutely positioned (animated elements). ✅ No interaction blocking - all 53 interactive elements clickable. ✅ No console errors. ✅ Component imported in PageShell.tsx. VISUAL VERIFICATION: ❌ Decorative elements are INVISIBLE. ❌ Left border: Completely dark/black, NO mountain shapes or flying leaves visible. ❌ Right border: Completely dark/black, NO cyberpunk buildings, neon lines, or particles visible. ❌ Top: NO clouds visible. ❌ Bottom: NO grass visible. ❌ Pixel analysis: Green=0, Teal=0, Emerald=0 (left), Cyan=0, Pink=0, Purple=0 (right). ROOT CAUSE: Elements use extremely low opacity (5%-30%), very dark base colors (900/950 shades), heavy blur effects (blur-xl/2xl/3xl), against dark background (rgb(5,9,20)). The combination makes decorations essentially invisible. SOLUTION REQUIRED: Increase opacity to 40-80%, use brighter color shades (400-600), reduce blur intensity, or lighten background for contrast."
   
-  - task: "Premium3DBorders does not block interactions"
+  - task: "PremiumBorders does not block interactions"
     implemented: true
     working: true
-    file: "/app/frontend/src/components/Premium3DBorders.jsx"
+    file: "/app/frontend/src/components/PremiumBorders.js"
     stuck_count: 0
     priority: "high"
     needs_retesting: false
@@ -134,11 +137,14 @@ frontend:
       - working: true
         agent: "testing"
         comment: "Verified that pointer-events-none is correctly set on the Premium3DBorders container. Tested interaction with 53 interactive elements (buttons/links) on the page. Successfully hovered and interacted with elements. No interaction blocking detected. The z-[-1] ensures the 3D canvas stays behind all content."
+      - working: true
+        agent: "testing"
+        comment: "RE-VERIFIED with new CSS/framer-motion implementation. ✅ pointer-events-none correctly set on PremiumBorders container. ✅ Tested interaction with 53 interactive elements (buttons/links). ✅ All elements are clickable and hoverable. ✅ No interaction blocking detected. ✅ z-[-5] ensures decorations stay behind all content."
   
-  - task: "Premium3DBorders does not break layout"
+  - task: "PremiumBorders does not break layout"
     implemented: true
     working: true
-    file: "/app/frontend/src/components/Premium3DBorders.jsx"
+    file: "/app/frontend/src/components/PremiumBorders.js"
     stuck_count: 0
     priority: "high"
     needs_retesting: false
@@ -146,6 +152,9 @@ frontend:
       - working: true
         agent: "testing"
         comment: "Verified layout integrity with Premium3DBorders active. Main content is visible and properly displayed. Body overflow is visible (normal). Canvas container covers full viewport with fixed positioning. No layout breaking issues detected. Content scrolls normally while 3D background remains fixed."
+      - working: true
+        agent: "testing"
+        comment: "RE-VERIFIED with new CSS/framer-motion implementation. ✅ Layout integrity maintained. ✅ Main content is visible and properly displayed. ✅ Container uses fixed positioning covering full viewport. ✅ No layout breaking issues detected. ✅ Content scrolls normally while decorations remain fixed in background."
 
 backend:
   - task: "Remove large carousel banner from /shop page"
@@ -198,14 +207,15 @@ backend:
 
 metadata:
   created_by: "testing_agent"
-  version: "1.2"
-  test_sequence: 6
+  version: "1.3"
+  test_sequence: 7
   run_ui: true
 
 test_plan:
   current_focus:
-    - "Premium3DBorders component renders with WebGL"
-  stuck_tasks: []
+    - "PremiumBorders component renders with CSS/framer-motion"
+  stuck_tasks:
+    - "PremiumBorders component renders with CSS/framer-motion"
   test_all: false
   test_priority: "high_first"
 
@@ -216,3 +226,5 @@ agent_communication:
     message: "RE-TESTED after lighting improvements (increased lighting, moved elements closer, removed fog). TECHNICAL IMPROVEMENTS CONFIRMED: ✅ Lighting increased: ambientLight 1.5, directionalLights 2.5 intensity, pointLight 1.0. ✅ Elements moved closer: NatureBorder [-12,-2,-5] (was [-15,0,-10]), CityBorder [12,-2,-5] (was [15,0,-10]). ✅ Fog removed. ✅ Emissive properties added to meshes. PIXEL ANALYSIS RESULTS: ✅ Average brightness improved to 85.3% on both sides (was barely visible before). ✅ Green-dominant areas detected (2 locations) indicating nature elements present. ✅ Blue-dominant areas detected (water/sky elements). ❌ NO purple-dominant areas detected (cityscape should show purple). VISUAL VERIFICATION: ❌ 3D elements are STILL NOT CLEARLY VISIBLE in screenshots. ❌ Mountain/stream on left NOT easily distinguishable. ❌ Cityscape on right NOT easily distinguishable. ⚠️ Modal keeps appearing in screenshots, blocking full view. ⚠️ Edge screenshots show mostly dark areas with subtle color variations only. CONCLUSION: While technical improvements have been implemented and pixel brightness has increased significantly, the 3D elements are NOT meeting the requirement of being 'brightly illuminated and easily distinguishable against the dark background.' The elements may need to be: 1) Positioned differently (more towards viewport edges), 2) Made larger/more prominent, 3) Given stronger emissive properties, 4) Moved even closer to camera, or 5) Background darkness reduced to increase contrast."
   - agent: "testing"
     message: "FINAL TEST after latest changes (MeshBasicMaterial, scale 1.5, x=-18 and x=18). ROOT CAUSE IDENTIFIED: The 3D elements are positioned OUTSIDE the camera's field of view. TECHNICAL ANALYSIS: ✅ Canvas correctly renders at 1920x1080 covering full viewport. ✅ WebGL2 active, no errors. ✅ All materials switched to MeshBasicMaterial (self-illuminating). ✅ Scale increased to 1.5. ✅ Elements positioned at x=-18 (NatureBorder) and x=18 (CityBorder). CAMERA FRUSTUM ISSUE: With camera at position [0,0,10], FOV 75°, looking at elements at z=-5 (15 units from camera), the horizontal field of view is approximately 23 units wide (x=-11.5 to x=11.5). Elements positioned at x=±18 are OUTSIDE this viewing frustum by approximately 6.5 units on each side. VISUAL EVIDENCE: ❌ Left edge screenshots (0-400px): Completely dark/black, NO mountain, stream, or trees visible. ❌ Right edge screenshots (1520-1920px): Completely dark/black, NO cityscape, buildings, or park visible. ❌ Bottom screenshots: NO grass elements visible. SOLUTION: Elements need to be repositioned to x=±8 to x=±10 range to be within camera view, OR camera FOV needs to be increased, OR camera needs to be moved back further. Current positioning makes elements invisible regardless of material, lighting, or scale."
+  - agent: "testing"
+    message: "TESTED NEW CSS/FRAMER-MOTION IMPLEMENTATION (PremiumBorders.js). Main agent switched from WebGL/Canvas to CSS/framer-motion based 2.5D decoration system. TECHNICAL VERIFICATION - ALL PASSED: ✅ Component renders correctly with 105 divs (55 animated). ✅ Container: fixed positioning, inset-0, z-[-5], pointer-events-none. ✅ Left border: 288px wide (15vw) with linear gradient. ✅ Right border: 288px wide (15vw) with linear gradient. ✅ Top area: 432px high (40vh). ✅ Bottom area: 216px high (20vh). ✅ No interaction blocking - all 53 interactive elements clickable. ✅ Layout not broken. ✅ No console errors. ✅ Component properly imported in PageShell.tsx. VISUAL VERIFICATION - CRITICAL FAILURE: ❌ ALL decorative elements are INVISIBLE. ❌ Left border: Completely dark/black, NO mountain shapes or flying leaves visible. ❌ Right border: Completely dark/black, NO cyberpunk buildings, neon road lines, or glowing particles visible. ❌ Top: NO clouds visible. ❌ Bottom: NO grass visible. ❌ Pixel color analysis: All counts = 0 (no green, teal, emerald, cyan, pink, or purple detected). ROOT CAUSE ANALYSIS: Elements use extremely low opacity values (5%-30%), very dark base colors (emerald-900/20, teal-800/20, indigo-950/30, fuchsia-950/20), heavy blur effects (blur-xl, blur-2xl, blur-3xl), against very dark background (rgb(5,9,20)). The combination of low opacity + dark colors + heavy blur + dark background makes all decorations essentially invisible. SOLUTION REQUIRED: 1) Increase opacity to 40-80% range, 2) Use brighter color shades (400-600 instead of 900-950), 3) Reduce blur intensity (blur-sm or blur-md), 4) Consider lighter background or add subtle glow effects to make elements stand out."

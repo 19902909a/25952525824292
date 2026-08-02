@@ -540,10 +540,10 @@ export default function RootLandingPage() {
           </div>
         </section>
 
-        <section className="mx-auto w-full max-w-6xl px-4 py-14 sm:px-6 sm:py-18 lg:px-8 lg:py-24" data-testid="home-platforms-section">
-          <div className={`${luxurySection} home-platforms-neutral-shell p-5 sm:p-7 lg:p-10 relative overflow-hidden`}>
+        <section className="mx-auto w-full max-w-4xl px-4 py-8 sm:px-6 sm:py-10 lg:px-8 lg:py-12" data-testid="home-platforms-section">
+          <div className={`${luxurySection} home-platforms-neutral-shell p-4 sm:p-6 lg:p-8 relative overflow-hidden ring-1 ring-white/10`}>
             <video
-              className="absolute inset-0 h-full w-full object-cover mix-blend-screen opacity-100 filter brightness-125"
+              className="absolute inset-0 h-[80%] w-[80%] m-auto object-cover rounded-2xl mix-blend-screen opacity-100 filter brightness-125 shadow-2xl"
               src="/banner-3.mp4"
               poster={heroImage}
               autoPlay

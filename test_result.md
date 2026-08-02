@@ -102,8 +102,21 @@
 # Testing Data - Main Agent and testing sub agent both should log testing data below this section
 #====================================================================================================
 
-user_problem_statement: "Verify text removal on /decouvrir page: 1) 'lovanet — le hub officiel...' and following paragraph, 2) 'Tout l'univers Lovanet en un clic' and subtitle, 3) 'Sections dédiées' heading and subtitle 'Chaque univers a sa propre page...', 4) 'Explorer le catalogue' button, 5) word 'collector' from 'Boutique' button."
+user_problem_statement: "Verify Hub Ferry component centering on /decouvrir page: Component should be centered horizontally and take up large width across the page (not squished into right column)."
 
+frontend:
+  - task: "Hub Ferry component centered and full-width on /decouvrir page"
+    implemented: true
+    working: true
+    file: "/app/frontend/src/pages/Discover.tsx"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "testing"
+        comment: "✅ VERIFIED Hub Ferry component centering and layout on /decouvrir page (desktop 1920x1080). TECHNICAL VERIFICATION: ✅ Component found at data-testid='discover-ferry-hub-anchor' and 'discover-ferry-hub'. ✅ Dimensions: 1368px width × 842px height. ✅ Parent container: 1400px width with 'container mx-auto px-4' classes. CENTERING ANALYSIS: ✅ Perfectly centered: 0.0px offset between component center (960px) and parent center (960px). ✅ Large width: Takes up 97.7% of parent container width (1368px / 1400px). ✅ Not in right column: Starts at 14.4% of viewport width (276px / 1920px). ✅ Component positioned at X=276px, well within left side of viewport. LAYOUT VERIFICATION: ✅ Component uses full width (w-full class) within centered container. ✅ No margin-left or margin-right on component itself. ✅ Parent has mx-auto (auto margins) for horizontal centering. ✅ No console errors. ✅ Visual confirmation via screenshots shows component centered and spanning full container width. CONCLUSION: Hub Ferry component is successfully centered horizontally and takes up large width across the page, not squished into any column. Layout implementation is correct."
+  
 frontend:
   - task: "Remove specified text from /decouvrir page"
     implemented: true
@@ -258,18 +271,20 @@ backend:
 
 metadata:
   created_by: "testing_agent"
-  version: "1.4"
-  test_sequence: 8
+  version: "1.5"
+  test_sequence: 9
   run_ui: true
 
 test_plan:
   current_focus:
-    - "Remove specified text from /decouvrir page"
+    - "Hub Ferry component centered and full-width on /decouvrir page"
   stuck_tasks: []
   test_all: false
   test_priority: "high_first"
 
 agent_communication:
+  - agent: "testing"
+    message: "✅ COMPLETED Hub Ferry component centering verification on /decouvrir page. Tested on desktop (1920x1080). VERIFICATION RESULTS: ✅ Component is PERFECTLY CENTERED with 0.0px offset from parent center. ✅ Takes up LARGE WIDTH at 97.7% of parent container (1368px / 1400px). ✅ NOT in right column - starts at 14.4% of viewport width. ✅ Parent container uses 'container mx-auto' for centering with max-width 1400px. ✅ Component uses 'w-full' class to span full container width. ✅ No layout issues detected. ✅ No console errors. CONCLUSION: Hub Ferry component layout is working correctly - centered horizontally and taking up large width across the page as intended. The component is not squished into any column and displays prominently in the center of the page."
   - agent: "testing"
     message: "Completed comprehensive testing of Premium3DBorders component on desktop (1920x1080). TECHNICAL VERIFICATION: ✅ Canvas renders with WebGL2 context active. ✅ Container has correct positioning (fixed inset-0 z-[-1] pointer-events-none). ✅ No interaction blocking - all buttons/links clickable. ✅ Layout not broken - main content visible. ✅ Component persists across pages. ✅ No console errors. VISUAL ISSUE: ⚠️ 3D elements (mountain/stream on left, cityscape on right, grass/stars) are NOT CLEARLY VISIBLE. Only subtle color gradients visible in background. The 3D objects defined in the code (NatureBorder at position [-15,0,-10], CityBorder at position [15,0,-10], Grass, Stars) are not discernible in screenshots. Possible causes: elements too dark for dark background, positioned too far from camera, or obscured by fog effect (line 173). RECOMMENDATION: Adjust camera position, increase element brightness/size, reduce fog intensity, or move elements closer to camera to make them more visible."
   - agent: "testing"

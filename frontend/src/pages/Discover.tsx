@@ -196,8 +196,8 @@ const Discover = () => {
           <div aria-hidden className="absolute bottom-0 left-1/3 w-[420px] h-[420px] rounded-full blur-3xl opacity-30 animate-pulse"
             style={{ background: "radial-gradient(circle, #a78bfa 0%, transparent 60%)", animationDelay: "3s" }} />
 
-          <div className="relative grid lg:grid-cols-[1.1fr,1fr] gap-8 lg:gap-12 items-center">
-            <div className="relative z-10">
+          <div className="relative flex flex-col items-center text-center">
+            <div className="relative z-10 max-w-4xl mx-auto flex flex-col items-center">
               <span className="inline-flex items-center gap-2 text-[10px] uppercase tracking-[0.3em] px-3 py-1 rounded-full border border-fuchsia-400/40 text-fuchsia-300 bg-fuchsia-500/10 backdrop-blur mb-6">
                 <Sparkles className="w-3 h-3" /> Univers officiel · 2026
               </span>
@@ -214,7 +214,7 @@ const Discover = () => {
                 <span className="text-2xl md:text-3xl lg:text-4xl font-semibold opacity-90">: Lovanet Univers</span>
               </h1>
 
-              <div className="flex flex-wrap gap-3 mt-6">
+              <div className="flex flex-wrap justify-center gap-3 mt-6">
                 <Link
                   to="/shop"
                   className="inline-flex items-center gap-2 px-6 py-3 rounded-full font-semibold text-sm text-white border border-white/20 bg-white/5 backdrop-blur hover:bg-white/10 transition-colors"
@@ -223,19 +223,19 @@ const Discover = () => {
                 </Link>
               </div>
             </div>
+          </div>
 
-            <div className="mt-10" data-testid="discover-ferry-hub-anchor">
+          <div className="mt-14 w-full" data-testid="discover-ferry-hub-anchor">
             <HubEmbedFrame
               src="/hub/ferry"
               title="Hub Ferry"
-              heightClassName="h-[620px] md:h-[760px]"
+              heightClassName="h-[620px] md:h-[760px] lg:h-[840px] w-full"
               testId="discover-ferry-hub"
             />
           </div>
         </div>
 
         <div aria-hidden className="h-px w-full" style={{ background: "linear-gradient(90deg, transparent, rgba(240,171,252,0.5), transparent)" }} />
-        </div>
       </section>
 
       {/* SECTIONS DÉDIÉES — premium cards */}

@@ -109,7 +109,7 @@ frontend:
     implemented: true
     working: false
     file: "/app/frontend/src/components/Premium3DBorders.jsx"
-    stuck_count: 1
+    stuck_count: 2
     priority: "high"
     needs_retesting: false
     status_history:
@@ -119,6 +119,9 @@ frontend:
       - working: false
         agent: "testing"
         comment: "RE-TESTED after visibility improvements (lighting increased, elements moved closer, fog removed). TECHNICAL CHANGES VERIFIED: ✅ Lighting: ambientLight 1.5, directionalLights 2.5 intensity each, pointLight 1.0. ✅ Positions: NatureBorder [-12,-2,-5], CityBorder [12,-2,-5] (moved closer from -15 and 15). ✅ Fog removed. ✅ Emissive properties added. PIXEL ANALYSIS: ✅ Brightness improved to 85.3% average (was barely visible). ✅ Green areas detected (nature elements). ✅ Blue areas detected (water/sky). ❌ NO purple areas detected (cityscape missing). VISUAL RESULT: ❌ 3D elements STILL NOT CLEARLY VISIBLE in screenshots. ❌ Mountain/stream NOT easily distinguishable on left. ❌ Cityscape NOT easily distinguishable on right. Edge screenshots show mostly dark with only subtle color hints. VERDICT: Does not meet requirement of 'brightly illuminated and easily distinguishable against dark background.' Improvements made but insufficient for clear visibility. Recommend: stronger emissive values, larger element sizes, different positioning (closer to edges), or lighter background for better contrast."
+      - working: false
+        agent: "testing"
+        comment: "RE-TESTED after latest changes (MeshBasicMaterial, scale 1.5, positions x=-18 and x=18). ROOT CAUSE IDENTIFIED: ❌ 3D elements are positioned OUTSIDE the camera's field of view. TECHNICAL VERIFICATION: ✅ Canvas renders correctly (1920x1080 full viewport). ✅ WebGL2 active. ✅ All materials switched to MeshBasicMaterial. ✅ Scale increased to 1.5. ✅ Elements positioned at x=-18 (left) and x=18 (right). CAMERA FRUSTUM CALCULATION: Camera at [0,0,10] with FOV 75° viewing elements at z=-5 (15 units away). At this distance, horizontal view width ≈ 23 units (x=-11.5 to x=11.5). Elements at x=±18 are OUTSIDE this range by ~6.5 units. VISUAL EVIDENCE: ❌ Left edge (0-400px): Completely dark, NO mountain/stream visible. ❌ Right edge (1520-1920px): Completely dark, NO cityscape visible. ❌ Bottom: NO grass visible. SOLUTION REQUIRED: Move elements to x=±8 to x=±10 range, OR adjust camera FOV/position, OR reposition elements closer to viewport edges in screen space rather than 3D space."
   
   - task: "Premium3DBorders does not block interactions"
     implemented: true
@@ -195,8 +198,8 @@ backend:
 
 metadata:
   created_by: "testing_agent"
-  version: "1.1"
-  test_sequence: 5
+  version: "1.2"
+  test_sequence: 6
   run_ui: true
 
 test_plan:
@@ -211,3 +214,5 @@ agent_communication:
     message: "Completed comprehensive testing of Premium3DBorders component on desktop (1920x1080). TECHNICAL VERIFICATION: ✅ Canvas renders with WebGL2 context active. ✅ Container has correct positioning (fixed inset-0 z-[-1] pointer-events-none). ✅ No interaction blocking - all buttons/links clickable. ✅ Layout not broken - main content visible. ✅ Component persists across pages. ✅ No console errors. VISUAL ISSUE: ⚠️ 3D elements (mountain/stream on left, cityscape on right, grass/stars) are NOT CLEARLY VISIBLE. Only subtle color gradients visible in background. The 3D objects defined in the code (NatureBorder at position [-15,0,-10], CityBorder at position [15,0,-10], Grass, Stars) are not discernible in screenshots. Possible causes: elements too dark for dark background, positioned too far from camera, or obscured by fog effect (line 173). RECOMMENDATION: Adjust camera position, increase element brightness/size, reduce fog intensity, or move elements closer to camera to make them more visible."
   - agent: "testing"
     message: "RE-TESTED after lighting improvements (increased lighting, moved elements closer, removed fog). TECHNICAL IMPROVEMENTS CONFIRMED: ✅ Lighting increased: ambientLight 1.5, directionalLights 2.5 intensity, pointLight 1.0. ✅ Elements moved closer: NatureBorder [-12,-2,-5] (was [-15,0,-10]), CityBorder [12,-2,-5] (was [15,0,-10]). ✅ Fog removed. ✅ Emissive properties added to meshes. PIXEL ANALYSIS RESULTS: ✅ Average brightness improved to 85.3% on both sides (was barely visible before). ✅ Green-dominant areas detected (2 locations) indicating nature elements present. ✅ Blue-dominant areas detected (water/sky elements). ❌ NO purple-dominant areas detected (cityscape should show purple). VISUAL VERIFICATION: ❌ 3D elements are STILL NOT CLEARLY VISIBLE in screenshots. ❌ Mountain/stream on left NOT easily distinguishable. ❌ Cityscape on right NOT easily distinguishable. ⚠️ Modal keeps appearing in screenshots, blocking full view. ⚠️ Edge screenshots show mostly dark areas with subtle color variations only. CONCLUSION: While technical improvements have been implemented and pixel brightness has increased significantly, the 3D elements are NOT meeting the requirement of being 'brightly illuminated and easily distinguishable against the dark background.' The elements may need to be: 1) Positioned differently (more towards viewport edges), 2) Made larger/more prominent, 3) Given stronger emissive properties, 4) Moved even closer to camera, or 5) Background darkness reduced to increase contrast."
+  - agent: "testing"
+    message: "FINAL TEST after latest changes (MeshBasicMaterial, scale 1.5, x=-18 and x=18). ROOT CAUSE IDENTIFIED: The 3D elements are positioned OUTSIDE the camera's field of view. TECHNICAL ANALYSIS: ✅ Canvas correctly renders at 1920x1080 covering full viewport. ✅ WebGL2 active, no errors. ✅ All materials switched to MeshBasicMaterial (self-illuminating). ✅ Scale increased to 1.5. ✅ Elements positioned at x=-18 (NatureBorder) and x=18 (CityBorder). CAMERA FRUSTUM ISSUE: With camera at position [0,0,10], FOV 75°, looking at elements at z=-5 (15 units from camera), the horizontal field of view is approximately 23 units wide (x=-11.5 to x=11.5). Elements positioned at x=±18 are OUTSIDE this viewing frustum by approximately 6.5 units on each side. VISUAL EVIDENCE: ❌ Left edge screenshots (0-400px): Completely dark/black, NO mountain, stream, or trees visible. ❌ Right edge screenshots (1520-1920px): Completely dark/black, NO cityscape, buildings, or park visible. ❌ Bottom screenshots: NO grass elements visible. SOLUTION: Elements need to be repositioned to x=±8 to x=±10 range to be within camera view, OR camera FOV needs to be increased, OR camera needs to be moved back further. Current positioning makes elements invisible regardless of material, lighting, or scale."

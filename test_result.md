@@ -102,58 +102,82 @@
 # Testing Data - Main Agent and testing sub agent both should log testing data below this section
 #====================================================================================================
 
-user_problem_statement: "Verify the homepage layout. The main hero banner video should have its height restored so buttons are visible, and its width horizontally reduced by about 30% (around 70% width) and centered. Check if it looks correct on desktop without breaking layout."
+user_problem_statement: "Verify the hero section layout in RootLandingPage.js. We reduced the section width to 70%, reduced the section padding to make thin borders around the video, and reduced the vertical height of the video banner to min-h-[300px]. Check if the buttons are visible now and the layout is solid."
 
 frontend:
-  - task: "Hero banner video width adjustment"
+  - task: "Hero section width adjustment to 70%"
     implemented: true
     working: false
-    file: "/app/frontend/src/components/HeroCarousel.tsx"
+    file: "/app/frontend/src/pages/RootLandingPage.js"
     stuck_count: 0
     priority: "high"
     needs_retesting: false
     status_history:
       - working: false
         agent: "testing"
-        comment: "Tested on desktop (1920x1080). Current width is 55.04% (lg:w-[58%] class), but should be ~70%. The video banner is properly centered and height (593px) is sufficient - video player controls are visible. Need to change line 510 from 'lg:w-[58%]' to 'lg:w-[70%]'."
+        comment: "Tested on desktop (1920x1080). Line 334 has 'md:w-[70%]' but also 'max-w-5xl' which caps width at 1024px. Actual width is 53.33% (1024px) instead of 70% (1344px). The max-w-5xl constraint is preventing the section from reaching 70% width. Need to either remove max-w-5xl or increase it to allow 70% width on large screens."
   
-  - task: "Hero banner video height and button visibility"
+  - task: "Hero section padding for thin borders"
     implemented: true
     working: true
-    file: "/app/frontend/src/components/HeroCarousel.tsx"
+    file: "/app/frontend/src/pages/RootLandingPage.js"
     stuck_count: 0
     priority: "high"
     needs_retesting: false
     status_history:
       - working: true
         agent: "testing"
-        comment: "Video height is 593px which is sufficient. Video player controls (mute, CC, settings, fullscreen buttons) are visible at the top right of the video player. Height is working correctly."
+        comment: "Padding is 17px (lg:p-4 on line 335), creating thin borders around the video. This is working correctly and looks good visually."
   
-  - task: "Hero banner centering"
+  - task: "Hero section video height min-h-[300px]"
     implemented: true
     working: true
-    file: "/app/frontend/src/components/HeroCarousel.tsx"
+    file: "/app/frontend/src/pages/RootLandingPage.js"
     stuck_count: 0
     priority: "high"
     needs_retesting: false
     status_history:
       - working: true
         agent: "testing"
-        comment: "Banner is properly centered on desktop. The flex container with 'items-center justify-center' is working correctly."
+        comment: "Video banner height is exactly 300px (line 341: 'min-h-[250px] sm:min-h-[300px]'). Height requirement is met on desktop."
+  
+  - task: "Hero section button visibility"
+    implemented: true
+    working: true
+    file: "/app/frontend/src/pages/RootLandingPage.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "testing"
+        comment: "Both primary and secondary buttons are fully visible within the banner area. Buttons are positioned at the bottom of the hero section (lines 440-457) and are not cut off. All 3 highlight links below the buttons are also visible."
+  
+  - task: "Hero section layout and centering"
+    implemented: true
+    working: true
+    file: "/app/frontend/src/pages/RootLandingPage.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "testing"
+        comment: "Layout is solid and visually appealing. The hero section is properly centered with mx-auto. Video is centered within the section. Overall layout structure is working correctly."
 
 metadata:
   created_by: "testing_agent"
   version: "1.0"
-  test_sequence: 1
+  test_sequence: 2
   run_ui: true
 
 test_plan:
   current_focus:
-    - "Hero banner video width adjustment"
+    - "Hero section width adjustment to 70%"
   stuck_tasks: []
   test_all: false
   test_priority: "high_first"
 
 agent_communication:
   - agent: "testing"
-    message: "Completed testing of hero banner layout on desktop (1920x1080). Found that width needs adjustment from 58% to 70%. Height and centering are working correctly. Video player controls are visible. See detailed findings in status_history."
+    message: "Completed testing of RootLandingPage.js hero section on desktop (1920x1080). FINDINGS: ✅ Padding (17px) creates thin borders - PASS. ✅ Video height (300px) meets min-h-[300px] - PASS. ✅ Buttons fully visible - PASS. ✅ Layout is solid and centered - PASS. ❌ Section width is 53.33% instead of 70% due to max-w-5xl constraint on line 334 - NEEDS FIX. The max-w-5xl (1024px) is preventing the section from reaching 70% width (1344px) on large screens. Recommend removing max-w-5xl or increasing to max-w-7xl to allow full 70% width."

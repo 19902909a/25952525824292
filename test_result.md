@@ -102,76 +102,61 @@
 # Testing Data - Main Agent and testing sub agent both should log testing data below this section
 #====================================================================================================
 
-user_problem_statement: "Verify the hero section layout in RootLandingPage.js. We reduced the section width to 70%, reduced the section padding to make thin borders around the video, and reduced the vertical height of the video banner to min-h-[300px]. Check if the buttons are visible now and the layout is solid."
+user_problem_statement: "Navigate to /shop and verify that the large carousel banner displaying products (and videos) has been completely removed. Verify that the text 'Anime.Moments.officiel & AnimemomentsAnimeofficiel — collectors, posters, vêtements, sneakers, manga, musique & numériques.' has been removed from the header. Ensure the title 'Boutique' and the trust ticker (Livraison suivie 3-7j...) are still present."
 
 frontend:
-  - task: "Hero section width adjustment to 70%"
+  - task: "Remove large carousel banner from /shop page"
     implemented: true
     working: true
-    file: "/app/frontend/src/pages/RootLandingPage.js"
+    file: "/app/frontend/src/components/ShopHeroBanner.tsx"
     stuck_count: 0
     priority: "high"
     needs_retesting: false
     status_history:
-      - working: false
-        agent: "testing"
-        comment: "Tested on desktop (1920x1080). Line 334 has 'md:w-[70%]' but also 'max-w-5xl' which caps width at 1024px. Actual width is 53.33% (1024px) instead of 70% (1344px). The max-w-5xl constraint is preventing the section from reaching 70% width. Need to either remove max-w-5xl or increase it to allow 70% width on large screens."
       - working: true
         agent: "testing"
-        comment: "Re-tested on desktop (1920x1080) after max-w-5xl removal. Hero section width is now EXACTLY 1344px (70.00% of viewport). Line 334 now shows 'mx-auto w-[95%] md:w-[70%]' without max-w-5xl constraint. Both primary and secondary CTA buttons are fully visible and within viewport. Layout is robust and properly centered. All requirements met."
+        comment: "Tested on desktop (1920x1080). Verified that the large carousel banner displaying products and videos has been completely removed from the /shop page. The ShopHeroBanner component (lines 68-94) now only contains a header section with 'Boutique officielle Lovanet' text, the 'Boutique' title, and trust ticker. No carousel/slider elements found (checked for carousel, slider, swiper classes and navigation buttons). No video elements or iframes found in the hero banner area (top 800px). All carousel functionality has been successfully removed."
   
-  - task: "Hero section padding for thin borders"
+  - task: "Remove old header text from /shop page"
     implemented: true
     working: true
-    file: "/app/frontend/src/pages/RootLandingPage.js"
+    file: "/app/frontend/src/components/ShopHeroBanner.tsx"
     stuck_count: 0
     priority: "high"
     needs_retesting: false
     status_history:
       - working: true
         agent: "testing"
-        comment: "Padding is 17px (lg:p-4 on line 335), creating thin borders around the video. This is working correctly and looks good visually."
+        comment: "Verified that the text 'Anime.Moments.officiel & AnimemomentsAnimeofficiel — collectors, posters, vêtements, sneakers, manga, musique & numériques.' has been completely removed from the shop page header. Searched entire page content and confirmed the text is not present anywhere. The header now shows 'Boutique officielle Lovanet' instead (line 75-76 in ShopHeroBanner.tsx)."
   
-  - task: "Hero section video height min-h-[300px]"
+  - task: "Verify 'Boutique' title is present"
     implemented: true
     working: true
-    file: "/app/frontend/src/pages/RootLandingPage.js"
+    file: "/app/frontend/src/components/ShopHeroBanner.tsx"
     stuck_count: 0
     priority: "high"
     needs_retesting: false
     status_history:
       - working: true
         agent: "testing"
-        comment: "Video banner height is exactly 300px (line 341: 'min-h-[250px] sm:min-h-[300px]'). Height requirement is met on desktop."
+        comment: "Confirmed that the 'Boutique' title is present and visible on the /shop page. Found as h1 heading at line 78-80 in ShopHeroBanner.tsx with classes 'font-display text-3xl sm:text-5xl lg:text-6xl font-extrabold mt-2 gradient-text'. Title is properly displayed and visible to users."
   
-  - task: "Hero section button visibility"
+  - task: "Verify trust ticker is present"
     implemented: true
     working: true
-    file: "/app/frontend/src/pages/RootLandingPage.js"
+    file: "/app/frontend/src/components/ShopHeroBanner.tsx"
     stuck_count: 0
     priority: "high"
     needs_retesting: false
     status_history:
       - working: true
         agent: "testing"
-        comment: "Both primary and secondary buttons are fully visible within the banner area. Buttons are positioned at the bottom of the hero section (lines 440-457) and are not cut off. All 3 highlight links below the buttons are also visible."
-  
-  - task: "Hero section layout and centering"
-    implemented: true
-    working: true
-    file: "/app/frontend/src/pages/RootLandingPage.js"
-    stuck_count: 0
-    priority: "high"
-    needs_retesting: false
-    status_history:
-      - working: true
-        agent: "testing"
-        comment: "Layout is solid and visually appealing. The hero section is properly centered with mx-auto. Video is centered within the section. Overall layout structure is working correctly."
+        comment: "Confirmed that the trust ticker is present and visible on the /shop page. Found at lines 87-92 in ShopHeroBanner.tsx. All trust elements are visible: 'Livraison suivie 3–7j' (with Truck icon), 'Paiement sécurisé' (with ShieldCheck icon), '4,8/5 · +12 000 clients' (with Star icon), and 'Retours 14 jours' (with Sparkles icon). Trust ticker is properly displayed below the Boutique title."
 
 metadata:
   created_by: "testing_agent"
   version: "1.0"
-  test_sequence: 3
+  test_sequence: 4
   run_ui: true
 
 test_plan:
@@ -185,3 +170,5 @@ agent_communication:
     message: "Completed testing of RootLandingPage.js hero section on desktop (1920x1080). FINDINGS: ✅ Padding (17px) creates thin borders - PASS. ✅ Video height (300px) meets min-h-[300px] - PASS. ✅ Buttons fully visible - PASS. ✅ Layout is solid and centered - PASS. ❌ Section width is 53.33% instead of 70% due to max-w-5xl constraint on line 334 - NEEDS FIX. The max-w-5xl (1024px) is preventing the section from reaching 70% width (1344px) on large screens. Recommend removing max-w-5xl or increasing to max-w-7xl to allow full 70% width."
   - agent: "testing"
     message: "Re-verified hero section width after max-w-5xl removal. CONFIRMED: ✅ Hero section width is now EXACTLY 1344px (70.00% of 1920px viewport) - PASS. ✅ Both primary and secondary CTA buttons are fully visible and within viewport - PASS. ✅ Layout is robust and properly centered - PASS. ✅ All 3 highlight links are visible - PASS. ✅ No console errors - PASS. The max-w-5xl constraint has been successfully removed from line 334. All hero section requirements are now met."
+  - agent: "testing"
+    message: "Completed comprehensive testing of /shop page carousel banner removal and header text changes on desktop (1920x1080). VERIFIED: ✅ Large carousel banner completely removed - no carousel/slider elements found (checked for carousel, slider, swiper classes, navigation buttons). ✅ No video elements or iframes in hero banner area. ✅ Old header text 'Anime.Moments.officiel & AnimemomentsAnimeofficiel — collectors, posters, vêtements, sneakers, manga, musique & numériques.' completely removed from page. ✅ 'Boutique' title present and visible as h1 heading. ✅ Trust ticker present and visible with all elements: 'Livraison suivie 3–7j', 'Paiement sécurisé', '4,8/5 · +12 000 clients', 'Retours 14 jours'. ✅ 'Boutique officielle Lovanet' text present in header. ✅ No console errors. All requirements successfully met. ShopHeroBanner.tsx now contains only header section without carousel functionality."

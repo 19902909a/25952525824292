@@ -13,6 +13,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { usePortalAudio } from "@/hooks/usePortalAudio";
 import heroImage from "@/assets/anime-moments-hero.jpg";
 import mangaBanner from "@/assets/manga-banner.jpg";
+import { BreakoutDecorations, SectionDecorations, ShurikenDeco, FloatingCardsDeco, AkatsukiCloudDeco } from "@/components/BreakoutDecorations";
 
 const rotatingPortalDestinations = [
   { to: "/anime-moments", label: "Anime Moments", icon: Film },
@@ -323,6 +324,7 @@ export default function RootLandingPage() {
 
   return (
     <PageShell>
+      <BreakoutDecorations />
       <Helmet>
         <script type="application/ld+json">{JSON.stringify(pageStructuredData)}</script>
       </Helmet>
@@ -478,8 +480,11 @@ export default function RootLandingPage() {
                 {portalEntries.map((card, index) => {
                   const Icon = card.action.icon;
                   return (
-                    <Link key={`${card.testId}-${card.action.to}-${rotationIndex}`} to={card.action.to} className="group block" data-testid={card.testId}>
-                      <Card className={`${luxuryCard} portal-card-neutral-shell`}>
+                    <div key={`${card.testId}-${card.action.to}-${rotationIndex}`} className="relative">
+                      {index === 0 && <ShurikenDeco className="-top-12 -left-12 rotate-[15deg] z-50 w-24 h-24" />}
+                      {index === 1 && <FloatingCardsDeco />}
+                      <Link to={card.action.to} className="group block" data-testid={card.testId}>
+                        <Card className={`${luxuryCard} portal-card-neutral-shell`}>
                         <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(255,255,255,0.04),rgba(255,255,255,0.02))]" />
                         <div className="grid gap-0 sm:grid-cols-[1.02fr_0.98fr]">
                           <CardContent className="relative flex flex-col justify-between p-6">
@@ -533,6 +538,7 @@ export default function RootLandingPage() {
                         </div>
                       </Card>
                     </Link>
+                  </div>
                   );
                 })}
               </div>
@@ -540,8 +546,10 @@ export default function RootLandingPage() {
           </div>
         </section>
 
-        <section className="mx-auto w-full max-w-4xl px-4 py-8 sm:px-6 sm:py-10 lg:px-8 lg:py-12" data-testid="home-platforms-section">
-          <div className={`${luxurySection} home-platforms-neutral-shell p-4 sm:p-6 lg:p-8 relative overflow-hidden ring-1 ring-white/10`}>
+        <section className="mx-auto w-full max-w-4xl px-4 py-8 sm:px-6 sm:py-10 lg:px-8 lg:py-12 relative" data-testid="home-platforms-section">
+          <SectionDecorations />
+          <AkatsukiCloudDeco className="-top-10 -right-20 z-10 opacity-80" />
+          <div className={`${luxurySection} home-platforms-neutral-shell p-4 sm:p-6 lg:p-8 relative overflow-hidden ring-1 ring-white/10 z-20`}>
             <video
               className="absolute inset-0 h-[80%] w-[80%] m-auto object-cover rounded-2xl mix-blend-screen opacity-100 filter brightness-125 shadow-2xl"
               src="/banner-3.mp4"

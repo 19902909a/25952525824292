@@ -224,50 +224,7 @@ const Discover = () => {
               </div>
             </div>
 
-            <div
-              className="relative h-[340px] md:h-[420px] lg:h-[480px]"
-              style={{ transformStyle: "preserve-3d", transform: `rotateX(${tilt.y * -6}deg) rotateY(${tilt.x * 8}deg)`, transition: "transform 0.2s ease-out" }}
-            >
-              {heroVideos.map((v, i) => {
-                const isActive = i === heroIdx;
-                const rel = (i - heroIdx + heroVideos.length) % heroVideos.length;
-                const offset = rel > heroVideos.length / 2 ? rel - heroVideos.length : rel;
-                return (
-                  <div
-                    key={v.id}
-                    className="absolute top-1/2 left-1/2 rounded-3xl overflow-hidden border transition-all duration-700"
-                    style={{
-                      width: "min(78%, 340px)",
-                      aspectRatio: "16/10",
-                      transform: `translate(-50%, -50%) translateX(${offset * 40}px) translateY(${Math.abs(offset) * 24}px) translateZ(${-Math.abs(offset) * 120}px) rotateY(${offset * -12}deg) scale(${isActive ? 1 : 0.85 - Math.abs(offset) * 0.05})`,
-                      opacity: Math.abs(offset) > 2 ? 0 : 1 - Math.abs(offset) * 0.25,
-                      borderColor: isActive ? "rgba(240,171,252,0.7)" : "rgba(255,255,255,0.15)",
-                      boxShadow: isActive
-                        ? "0 40px 80px -20px rgba(232,121,249,0.55), 0 0 0 1px rgba(240,171,252,0.4) inset"
-                        : "0 20px 40px -12px rgba(0,0,0,0.6)",
-                      zIndex: 10 - Math.abs(offset),
-                    }}
-                  >
-                    <img src={thumb(v.id)} alt={v.title} className="w-full h-full object-cover" />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent" />
-                    <div className="absolute bottom-0 left-0 right-0 p-4">
-                      <div className="text-[10px] uppercase tracking-widest text-fuchsia-300 mb-1">{v.channel}</div>
-                      <div className="text-sm font-semibold text-white line-clamp-2">{v.title}</div>
-                    </div>
-                    {isActive && (
-                      <div className="absolute top-3 right-3 w-10 h-10 rounded-full bg-white/20 backdrop-blur border border-white/40 grid place-items-center">
-                        <Play className="w-4 h-4 text-white fill-white" />
-                      </div>
-                    )}
-                  </div>
-                );
-              })}
-              <div aria-hidden className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[110%] h-[80%] rounded-full opacity-40 blur-2xl pointer-events-none"
-                style={{ background: "conic-gradient(from 0deg, #e879f9, #38bdf8, #fde68a, #e879f9)" }} />
-            </div>
-          </div>
-
-          <div className="mt-10" data-testid="discover-ferry-hub-anchor">
+            <div className="mt-10" data-testid="discover-ferry-hub-anchor">
             <HubEmbedFrame
               src="/hub/ferry"
               title="Hub Ferry"
@@ -278,6 +235,7 @@ const Discover = () => {
         </div>
 
         <div aria-hidden className="h-px w-full" style={{ background: "linear-gradient(90deg, transparent, rgba(240,171,252,0.5), transparent)" }} />
+        </div>
       </section>
 
       {/* SECTIONS DÉDIÉES — premium cards */}

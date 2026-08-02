@@ -213,33 +213,13 @@ const Discover = () => {
                 Anime.Moments.officiel<br />
                 <span className="text-2xl md:text-3xl lg:text-4xl font-semibold opacity-90">: Lovanet Univers</span>
               </h1>
-              <p className="text-base md:text-lg text-white/85 max-w-xl mb-3 leading-relaxed">
-                <span className="text-fuchsia-300 font-semibold">Lovanet</span> — le hub officiel :
-                <span className="text-red-300 font-semibold"> AnimemomentsAnimeofficiel</span> sur YouTube,
-                <span className="text-cyan-300 font-semibold"> Anime.Moments.officiel</span> sur TikTok,
-                Prime Video, catalogue 1500+ animés & boutique collector.
-              </p>
-              <p className="text-xs md:text-sm text-white/55 max-w-xl mb-8">
-                Un seul lien pour toutes les plateformes · Edits · Trailers · Merch officiel
-              </p>
 
-              <div className="flex flex-wrap gap-3">
-                <Link
-                  to="/anime-catalog"
-                  className="group inline-flex items-center gap-2 px-6 py-3 rounded-full font-semibold text-sm text-white transition-transform hover:scale-105"
-                  style={{
-                    background: "linear-gradient(135deg, #e879f9, #8b5cf6)",
-                    boxShadow: "0 20px 40px -12px rgba(232,121,249,0.6)",
-                  }}
-                >
-                  Explorer le catalogue
-                  <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-                </Link>
+              <div className="flex flex-wrap gap-3 mt-6">
                 <Link
                   to="/shop"
                   className="inline-flex items-center gap-2 px-6 py-3 rounded-full font-semibold text-sm text-white border border-white/20 bg-white/5 backdrop-blur hover:bg-white/10 transition-colors"
                 >
-                  <ShoppingBag className="w-4 h-4" /> Boutique collector
+                  <ShoppingBag className="w-4 h-4" /> Boutique
                 </Link>
               </div>
             </div>
@@ -303,11 +283,7 @@ const Discover = () => {
       {/* SECTIONS DÉDIÉES — premium cards */}
       <section className="container mx-auto px-4 py-14 md:py-20">
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-4">
-          <div>
-            <div className="text-[10px] uppercase tracking-[0.35em] text-fuchsia-300 mb-2">Explorer</div>
-            <h2 className="font-display text-3xl md:text-4xl font-black text-white">Sections dédiées</h2>
-          </div>
-          <p className="text-sm text-white/60 max-w-md">Chaque univers a sa propre page — vidéos, edits, trailers, produits et actualités.</p>
+          <div />
         </div>
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6" style={{ perspective: "1200px" }}>
@@ -366,12 +342,7 @@ const Discover = () => {
           style={{ background: "radial-gradient(ellipse at center, rgba(232,121,249,0.18), rgba(56,189,248,0.08) 60%, transparent)" }}>
           <div aria-hidden className="absolute inset-0 opacity-40"
             style={{ background: "conic-gradient(from 90deg at 50% 50%, transparent, rgba(240,171,252,0.15), transparent 40%)" }} />
-          <h3 className="relative font-display text-2xl md:text-4xl font-black text-white mb-3">
-            Tout l’univers Lovanet en un clic
-          </h3>
-          <p className="relative text-sm md:text-base text-white/70 max-w-xl mx-auto mb-6">
-            YouTube · TikTok · Prime · Catalogue · Shop — connectés au même hub officiel.
-          </p>
+          <div />
           <Link
             to="/anime-moments"
             className="relative inline-flex items-center gap-2 px-6 py-3 rounded-full font-semibold text-sm text-white transition-transform hover:scale-105"

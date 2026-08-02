@@ -13,7 +13,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { usePortalAudio } from "@/hooks/usePortalAudio";
 import heroImage from "@/assets/anime-moments-hero.jpg";
 import mangaBanner from "@/assets/manga-banner.jpg";
-import { BreakoutDecorations, ShurikenDeco, FloatingCardsDeco } from "@/components/BreakoutDecorations";
+import { FloatingCardsDeco } from "@/components/BreakoutDecorations";
 
 const rotatingPortalDestinations = [
   { to: "/anime-moments", label: "Anime Moments", icon: Film },
@@ -324,7 +324,6 @@ export default function RootLandingPage() {
 
   return (
     <PageShell>
-      <BreakoutDecorations />
       <Helmet>
         <script type="application/ld+json">{JSON.stringify(pageStructuredData)}</script>
       </Helmet>
@@ -481,7 +480,6 @@ export default function RootLandingPage() {
                   const Icon = card.action.icon;
                   return (
                     <div key={`${card.testId}-${card.action.to}-${rotationIndex}`} className="relative">
-                      {index === 0 && <ShurikenDeco className="-top-12 -left-12 rotate-[15deg] z-50 w-24 h-24" />}
                       {index === 1 && <FloatingCardsDeco />}
                       <Link to={card.action.to} className="group block" data-testid={card.testId}>
                         <Card className={`${luxuryCard} portal-card-neutral-shell`}>

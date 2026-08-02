@@ -11,7 +11,7 @@ const Leaf = ({ delay, x, duration }) => (
       opacity: [0, 1, 1, 0]
     }}
     transition={{ duration, repeat: Infinity, delay, ease: "linear" }}
-    className="absolute top-0 w-3 h-3 rounded-full bg-gradient-to-br from-green-400 to-emerald-600 blur-[1px]"
+    className="absolute top-0 w-4 h-4 rounded-full bg-gradient-to-br from-green-300 to-emerald-400 blur-[1px] shadow-[0_0_10px_rgba(52,211,153,0.8)]"
     style={{ borderBottomRightRadius: '0px' }}
   />
 );
@@ -23,59 +23,59 @@ const Particle = ({ color, duration, delay, x, y }) => (
       y: [y, y - 100], 
       x: [x, x + (Math.random() * 40 - 20)],
       scale: [0, 1.5, 0],
-      opacity: [0, 0.8, 0]
+      opacity: [0, 1, 0]
     }}
     transition={{ duration, repeat: Infinity, delay, ease: "easeInOut" }}
-    className={`absolute w-1.5 h-1.5 rounded-full blur-[2px] ${color}`}
+    className={`absolute w-2 h-2 rounded-full blur-[1px] shadow-[0_0_15px_currentColor] ${color} mix-blend-screen`}
   />
 );
 
 const Cloud = ({ delay, y, duration, scale }) => (
   <motion.div
     initial={{ x: '-10%', opacity: 0.2 }}
-    animate={{ x: '110%', opacity: [0.1, 0.4, 0.1] }}
+    animate={{ x: '110%', opacity: [0.3, 0.6, 0.3] }}
     transition={{ duration, repeat: Infinity, delay, ease: "linear" }}
-    className="absolute bg-white/10 blur-3xl rounded-full"
+    className="absolute bg-white/40 blur-xl rounded-full mix-blend-screen"
     style={{ top: y, width: 300 * scale, height: 100 * scale }}
   />
 );
 
 export const PremiumBorders = () => {
-  const leaves = useMemo(() => Array.from({ length: 15 }).map((_, i) => ({
+  const leaves = useMemo(() => Array.from({ length: 20 }).map((_, i) => ({
     id: `leaf-${i}`,
     x: Math.random() * 100,
     delay: Math.random() * 10,
     duration: 10 + Math.random() * 10
   })), []);
 
-  const particles = useMemo(() => Array.from({ length: 25 }).map((_, i) => ({
+  const particles = useMemo(() => Array.from({ length: 30 }).map((_, i) => ({
     id: `part-${i}`,
     x: Math.random() * 100,
     y: Math.random() * 100 + 50,
     delay: Math.random() * 5,
     duration: 3 + Math.random() * 4,
-    color: i % 2 === 0 ? 'bg-cyan-400' : 'bg-fuchsia-400'
+    color: i % 2 === 0 ? 'bg-cyan-300' : 'bg-fuchsia-300'
   })), []);
 
   return (
     <div className="fixed inset-0 pointer-events-none z-[-5] overflow-hidden bg-[#050914]">
       {/* Ciel & Nuages (Haut) */}
-      <div className="absolute top-0 left-0 right-0 h-[40vh] bg-gradient-to-b from-blue-900/20 via-indigo-900/10 to-transparent">
+      <div className="absolute top-0 left-0 right-0 h-[40vh] bg-gradient-to-b from-blue-600/30 via-indigo-600/10 to-transparent">
         <Cloud delay={0} y="5%" duration={40} scale={1} />
         <Cloud delay={15} y="15%" duration={55} scale={1.5} />
         <Cloud delay={5} y="10%" duration={45} scale={0.8} />
       </div>
 
       {/* Montagne, Marmottes & Ruisseau (Bord Gauche) */}
-      <div className="absolute top-0 bottom-0 left-0 w-[15vw] min-w-[200px] border-r border-white/5 bg-[linear-gradient(90deg,rgba(16,185,129,0.05)_0%,transparent_100%)]">
+      <div className="absolute top-0 bottom-0 left-0 w-[15vw] min-w-[200px] border-r border-emerald-500/20 bg-[linear-gradient(90deg,rgba(16,185,129,0.15)_0%,transparent_100%)]">
         {/* Silhouette de montagne */}
-        <div className="absolute top-1/4 -left-20 w-64 h-96 bg-emerald-900/20 rounded-[100px] rotate-45 blur-2xl" />
-        <div className="absolute top-1/2 -left-10 w-48 h-72 bg-teal-800/20 rounded-[80px] -rotate-12 blur-xl" />
+        <div className="absolute top-1/4 -left-20 w-64 h-96 bg-emerald-500/50 rounded-[100px] rotate-45 blur-xl shadow-[0_0_50px_rgba(16,185,129,0.4)]" />
+        <div className="absolute top-1/2 -left-10 w-48 h-72 bg-teal-400/50 rounded-[80px] -rotate-12 blur-lg shadow-[0_0_40px_rgba(45,212,191,0.4)]" />
         {/* Ruisseau animée */}
         <motion.div 
           animate={{ backgroundPosition: ['0% 0%', '0% 100%'] }}
           transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
-          className="absolute top-0 bottom-0 right-10 w-8 blur-md mix-blend-screen opacity-40"
+          className="absolute top-0 bottom-0 right-10 w-12 blur-md mix-blend-screen opacity-80 shadow-[0_0_30px_rgba(56,189,248,0.8)]"
           style={{ backgroundImage: 'linear-gradient(180deg, transparent, #38bdf8, transparent)', backgroundSize: '100% 200%' }}
         />
         {/* Chutes de feuilles (Vent) */}
@@ -83,35 +83,35 @@ export const PremiumBorders = () => {
       </div>
 
       {/* Ville Cyberpunk & Jardin Public (Bord Droit) */}
-      <div className="absolute top-0 bottom-0 right-0 w-[15vw] min-w-[200px] border-l border-white/5 bg-[linear-gradient(-90deg,rgba(236,72,153,0.05)_0%,transparent_100%)]">
+      <div className="absolute top-0 bottom-0 right-0 w-[15vw] min-w-[200px] border-l border-fuchsia-500/20 bg-[linear-gradient(-90deg,rgba(236,72,153,0.15)_0%,transparent_100%)]">
         {/* Gratte-ciels (blocs) */}
-        <div className="absolute bottom-0 -right-10 w-32 h-[60vh] bg-indigo-950/30 rounded-t-3xl blur-xl" />
-        <div className="absolute bottom-0 right-10 w-24 h-[40vh] bg-fuchsia-950/20 rounded-t-2xl blur-lg" />
+        <div className="absolute bottom-0 -right-10 w-32 h-[60vh] bg-indigo-600/60 rounded-t-3xl blur-lg shadow-[0_0_40px_rgba(79,70,229,0.5)]" />
+        <div className="absolute bottom-0 right-10 w-24 h-[40vh] bg-fuchsia-600/50 rounded-t-2xl blur-md shadow-[0_0_30px_rgba(217,70,239,0.5)]" />
         {/* Routes lumineuses (Trafic) */}
         <motion.div 
           animate={{ y: ['100vh', '-20vh'] }}
           transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
-          className="absolute right-20 w-1 h-32 bg-gradient-to-t from-transparent via-cyan-400 to-transparent blur-[2px]"
+          className="absolute right-20 w-2 h-32 bg-gradient-to-t from-transparent via-cyan-300 to-transparent blur-[1px] shadow-[0_0_20px_rgba(103,232,249,1)]"
         />
         <motion.div 
           animate={{ y: ['-20vh', '100vh'] }}
           transition={{ duration: 4, repeat: Infinity, ease: "linear", delay: 1.5 }}
-          className="absolute right-12 w-1 h-32 bg-gradient-to-b from-transparent via-pink-500 to-transparent blur-[2px]"
+          className="absolute right-12 w-2 h-32 bg-gradient-to-b from-transparent via-pink-400 to-transparent blur-[1px] shadow-[0_0_20px_rgba(244,114,182,1)]"
         />
         {/* Jardin public (particules d'énergie) */}
-        <div className="absolute bottom-20 right-0 left-0 h-64 bg-emerald-500/5 blur-3xl rounded-full" />
+        <div className="absolute bottom-20 right-0 left-0 h-64 bg-emerald-500/30 blur-2xl rounded-full mix-blend-screen" />
         {particles.map(p => <Particle key={p.id} {...p} x={`${p.x}%`} y={`${p.y}%`} />)}
       </div>
 
       {/* Herbes & Vent (Bas) */}
-      <div className="absolute bottom-0 left-0 right-0 h-[20vh] bg-gradient-to-t from-green-950/20 to-transparent flex items-end justify-around overflow-hidden px-[10vw]">
-        {Array.from({ length: 50 }).map((_, i) => (
+      <div className="absolute bottom-0 left-0 right-0 h-[20vh] bg-gradient-to-t from-green-700/40 to-transparent flex items-end justify-around overflow-hidden px-[10vw]">
+        {Array.from({ length: 80 }).map((_, i) => (
           <motion.div
             key={`grass-${i}`}
             animate={{ rotate: [-5, 10, -5] }}
             transition={{ duration: 2 + Math.random() * 2, repeat: Infinity, ease: "easeInOut", delay: Math.random() }}
-            className="w-1 bg-gradient-to-t from-emerald-800 to-green-500/50 rounded-t-full origin-bottom blur-[1px]"
-            style={{ height: `${20 + Math.random() * 60}px`, opacity: 0.3 + Math.random() * 0.5 }}
+            className="w-1.5 bg-gradient-to-t from-emerald-600 to-green-400 rounded-t-full origin-bottom blur-[0px] shadow-[0_0_5px_rgba(74,222,128,0.5)]"
+            style={{ height: `${30 + Math.random() * 80}px`, opacity: 0.6 + Math.random() * 0.4 }}
           />
         ))}
       </div>

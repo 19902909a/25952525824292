@@ -13,7 +13,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { usePortalAudio } from "@/hooks/usePortalAudio";
 import heroImage from "@/assets/anime-moments-hero.jpg";
 import mangaBanner from "@/assets/manga-banner.jpg";
-import { BreakoutDecorations, SectionDecorations, ShurikenDeco, FloatingCardsDeco, AkatsukiCloudDeco } from "@/components/BreakoutDecorations";
+import { BreakoutDecorations, ShurikenDeco, FloatingCardsDeco } from "@/components/BreakoutDecorations";
 
 const rotatingPortalDestinations = [
   { to: "/anime-moments", label: "Anime Moments", icon: Film },
@@ -547,8 +547,6 @@ export default function RootLandingPage() {
         </section>
 
         <section className="mx-auto w-full max-w-4xl px-4 py-8 sm:px-6 sm:py-10 lg:px-8 lg:py-12 relative" data-testid="home-platforms-section">
-          <SectionDecorations />
-          <AkatsukiCloudDeco className="-top-10 -right-20 z-10 opacity-80" />
           <div className={`${luxurySection} home-platforms-neutral-shell p-4 sm:p-6 lg:p-8 relative overflow-hidden ring-1 ring-white/10 z-20`}>
             <video
               className="absolute inset-0 h-[80%] w-[80%] m-auto object-cover rounded-2xl mix-blend-screen opacity-100 filter brightness-125 shadow-2xl"

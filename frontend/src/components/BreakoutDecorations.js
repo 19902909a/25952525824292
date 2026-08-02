@@ -8,29 +8,12 @@ export const BreakoutDecorations = () => {
       <div className="absolute top-0 bottom-0 left-0 w-32 bg-gradient-to-r from-cyan-500/10 to-transparent mix-blend-screen animate-pulse" style={{ filter: 'blur(20px)' }} />
       <div className="absolute top-0 bottom-0 right-0 w-32 bg-gradient-to-l from-fuchsia-500/10 to-transparent mix-blend-screen animate-pulse" style={{ filter: 'blur(20px)' }} />
 
-      {/* 12. Typographie Kanji géante */}
-      <div className="absolute top-1/4 -right-10 text-[200px] font-black text-white/[0.02] select-none" style={{ writingMode: 'vertical-rl', transform: 'rotate(5deg)' }}>
-        未来領域
-      </div>
-      <div className="absolute bottom-1/4 -left-10 text-[150px] font-black text-white/[0.02] select-none" style={{ writingMode: 'vertical-rl', transform: 'rotate(-5deg)' }}>
-        アニメ
-      </div>
-
       {/* 7. Lame d'épée en filigrane (Katana glassmorphism) */}
       <div 
         className="absolute top-[-10%] -left-[10%] w-[120%] h-16 bg-white/[0.01] backdrop-blur-md border-t border-b border-white/10 mix-blend-overlay"
         style={{ transform: 'rotate(25deg)', boxShadow: '0 0 50px rgba(255,255,255,0.05)' }}
       />
     </div>
-  );
-};
-
-export const SectionDecorations = () => {
-  return (
-    <>
-      {/* 18. Fumée / Brume volumétrique (générique pour les sections) */}
-      <div className="absolute -inset-x-20 -inset-y-20 bg-[radial-gradient(ellipse_at_center,rgba(139,92,246,0.15)_0%,transparent_60%)] mix-blend-screen blur-[40px] pointer-events-none animate-pulse" />
-    </>
   );
 };
 
@@ -62,10 +45,4 @@ export const FloatingCardsDeco = () => (
       style={{ transform: 'rotateY(15deg) rotateX(-5deg)' }}
     />
   </div>
-);
-
-export const AkatsukiCloudDeco = ({ className }) => (
-  <svg className={`pointer-events-none absolute ${className} drop-shadow-[0_0_10px_rgba(220,38,38,0.6)]`} width="120" height="80" viewBox="0 0 100 60" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M25 40C15 40 10 32 12 25C14 18 20 15 25 15C28 8 35 5 45 8C52 2 65 2 70 12C78 12 85 18 85 25C85 35 75 40 65 40H25Z" fill="#1e1e1e" stroke="#dc2626" strokeWidth="3"/>
-  </svg>
 );

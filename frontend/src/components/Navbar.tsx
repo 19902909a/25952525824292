@@ -226,16 +226,26 @@ export const Navbar = () => {
               <nav className="mx-auto hidden flex-1 items-center justify-center gap-1 overflow-hidden lg:flex">
                 {rotatingNavItems.map((item, index) => {
                   const active = isActivePath(item.to);
+                  const Icon = item.icon;
                   return (
                     <Link
                       key={`desktop-rotating-nav-${index}-${item.to}`}
                       to={item.to}
                       data-testid={`navbar-rotating-link-${index + 1}`}
                       className={cn(
-                        "nav-theme-chip nav-3d inline-flex min-h-[44px] items-center rounded-full px-4 py-2 text-sm font-medium",
+                        "group nav-theme-chip nav-3d inline-flex min-h-[44px] items-center gap-2 rounded-full px-4 py-2 text-sm font-medium",
                         active && "nav-theme-chip-active",
                       )}
+                      style={{ perspective: "600px" }}
                     >
+                      <motion.div
+                        whileHover={{ rotateY: 360, rotateX: 10, scale: 1.25 }}
+                        transition={{ type: "spring", stiffness: 200, damping: 10 }}
+                        className="flex items-center justify-center origin-center drop-shadow-[0_0_8px_rgba(255,255,255,0.8)]"
+                        style={{ transformStyle: "preserve-3d" }}
+                      >
+                        <Icon className="h-4 w-4 text-white group-hover:text-fuchsia-300 transition-colors" />
+                      </motion.div>
                       <span key={`desktop-label-${index}-${item.to}-${menuRotationIndex}`} className="inline-block animate-in fade-in zoom-in-95 duration-500 nav-theme-accent-text">
                         {item.label}
                       </span>

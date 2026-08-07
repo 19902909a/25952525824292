@@ -378,10 +378,8 @@ export default function RootLandingPage() {
               {heroBanner && heroBanner.visible !== false ? (
                 <video
                   ref={bannerVideoRef}
-                  key="/custom-hero-banner-web.mp4"
                   className="hero-banner-video absolute inset-0 h-full w-full object-cover object-center"
                   style={{ transform: `scale(${videoScale})` }}
-                  src={heroBanner.src}
                   autoPlay
                   muted
                   loop
@@ -391,7 +389,11 @@ export default function RootLandingPage() {
                   fetchPriority="high"
                   disablePictureInPicture
                   data-testid="hero-banner-background-video"
-                />
+                  poster="/custom-hero-banner-poster.jpg"
+                >
+                  <source src="/custom-hero-banner-mobile.mp4" type="video/mp4" media="(max-width: 768px)" />
+                  <source src={heroBanner.src} type="video/mp4" />
+                </video>
               ) : (
                 <div
                   className="absolute inset-0 h-full w-full bg-cover bg-center bg-black/80"

@@ -61,7 +61,6 @@ export const PremiumBorders = () => {
     <div className="fixed inset-0 pointer-events-none z-[0] overflow-hidden">
       {/* Global Background Video */}
       <video
-        src="/global-bg-web.mp4"
         autoPlay
         muted={true}
         loop
@@ -71,7 +70,11 @@ export const PremiumBorders = () => {
         disablePictureInPicture
         className="absolute inset-0 w-full h-full object-cover z-[-1] opacity-60"
         style={{ pointerEvents: 'none' }}
-      />
+        poster="/global-bg-poster.jpg"
+      >
+        <source src="/global-bg-mobile.mp4" type="video/mp4" media="(max-width: 768px)" />
+        <source src="/global-bg-web.mp4" type="video/mp4" />
+      </video>
       
       {/* Ciel & Nuages (Haut) */}
       <div className="absolute top-0 left-0 right-0 h-[40vh] bg-gradient-to-b from-blue-600/30 via-indigo-600/10 to-transparent">

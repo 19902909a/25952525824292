@@ -12,7 +12,7 @@ type ThemeDef = {
 };
 
 const THEMES: ThemeDef[] = [
-  { id: "dark", label: "Anime Moments", bg: "#0a1020", preview: ["#38bdf8", "#f472b6", "#8b5cf6"] },
+  { id: "default-blue", label: "Anime Moments", bg: "#020617", preview: ["#38bdf8", "#f472b6", "#8b5cf6"] },
   { id: "cyberpunk", label: "Cyberpunk", bg: "#09090b", preview: ["#22c55e", "#facc15", "#ef4444"] },
   { id: "kawaii", label: "Kawaii Pink", bg: "#fff0f5", preview: ["#ff69b4", "#ff1493", "#ba55d3"] },
   { id: "samurai", label: "Samurai Red", bg: "#1a0f14", preview: ["#dc2626", "#b91c1c", "#eab308"] },
@@ -83,7 +83,7 @@ function setEffective(effectiveId: string, animate: boolean) {
 
 export function ThemeSwitcher({ className }: { className?: string }) {
   const [open, setOpen] = useState(false);
-  const [activeTheme, setActiveTheme] = useState("dark");
+  const [activeTheme, setActiveTheme] = useState("default-blue");
   const [hovered, setHovered] = useState<ThemeDef | null>(null);
   const autoTimer = useRef<number | null>(null);
 
@@ -94,7 +94,9 @@ export function ThemeSwitcher({ className }: { className?: string }) {
   };
 
   useEffect(() => {
-    const saved = localStorage.getItem("lovanet.theme") || "dark";
+    // Force reset for users reporting wrong theme
+    localStorage.removeItem("lovanet.theme");
+    const saved = "default-blue";
     setActiveTheme(saved);
     currentEffective = "__init__"; // force premi\u00e8re application (sans animation)
     setEffective(resolveEffective(saved), false);

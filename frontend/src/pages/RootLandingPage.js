@@ -364,10 +364,10 @@ export default function RootLandingPage() {
               <div className="hero-banner-specular pointer-events-none absolute inset-0" />
               <div className="hero-banner-color-bloom pointer-events-none absolute inset-0" />
 
-              <div className="absolute right-3 top-3 z-40" data-testid="banner-reorder-control">
+              <div className="absolute right-3 top-3 z-50 pointer-events-auto" data-testid="banner-sizing-control">
                 <button
                   type="button"
-                  onClick={() => setReorderOpen((o) => !o)}
+                  onClick={(e) => { e.preventDefault(); setReorderOpen((o) => !o); }}
                   className="inline-flex items-center gap-1.5 rounded-full border border-white/20 bg-black/50 px-3 py-1.5 text-xs font-medium text-white/90 backdrop-blur-md transition-colors hover:bg-black/70"
                   data-testid="banner-reorder-toggle"
                 >
@@ -376,7 +376,8 @@ export default function RootLandingPage() {
                 </button>
                 {reorderOpen && (
                   <div
-                    className="mt-2 w-64 rounded-xl border border-white/15 bg-black/85 p-4 shadow-2xl backdrop-blur-xl"
+                    className="mt-2 w-64 rounded-xl border border-white/15 bg-black/85 p-4 shadow-2xl backdrop-blur-xl pointer-events-auto"
+                    data-testid="banner-reorder-panel"
                   >
                     <label className="text-xs font-semibold text-white/90 mb-2 block">
                       Zoom Vidéo: {Math.round(videoScale * 100)}%
@@ -388,7 +389,8 @@ export default function RootLandingPage() {
                       step="0.05"
                       value={videoScale}
                       onChange={(e) => setVideoScale(parseFloat(e.target.value))}
-                      className="w-full accent-fuchsia-500"
+                      className="w-full accent-fuchsia-500 cursor-pointer pointer-events-auto"
+                      data-testid="banner-size-slider"
                     />
                   </div>
                 )}

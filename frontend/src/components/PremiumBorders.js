@@ -61,9 +61,9 @@ export const PremiumBorders = () => {
     <div className="fixed inset-0 pointer-events-none z-[0] overflow-hidden">
       {/* Global Background Video */}
       <video
-        src="/global-bg.mp4"
+        src="/global-bg-web.mp4"
         autoPlay
-        muted
+        muted={true}
         loop
         playsInline
         className="absolute inset-0 w-full h-full object-cover z-[-1] opacity-60"

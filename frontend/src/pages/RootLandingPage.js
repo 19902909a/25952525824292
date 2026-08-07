@@ -99,7 +99,7 @@ const catalogBatchSize = 12;
 const catalogRowSize = 6;
 // Home banners: index 0 -> Hero, index 1 -> Portal card 1, index 2 -> Portal card 2.
 const DEFAULT_HOME_BANNERS = [
-  { id: "b1", src: "/custom-hero-banner.mp4", label: "Bannière hero (haut)" },
+  { id: "b1", src: "/custom-hero-banner-web.mp4", label: "Bannière hero (haut)" },
   { id: "b2", src: "", label: "Carte du haut" },
   { id: "b3", src: "", label: "Carte Prime & vidéos (bas)" },
 ];
@@ -342,7 +342,7 @@ export default function RootLandingPage() {
               {heroBanner && heroBanner.visible !== false ? (
                 <video
                   ref={bannerVideoRef}
-                  key="/custom-hero-banner.mp4"
+                  key="/custom-hero-banner-web.mp4"
                   className="hero-banner-video absolute inset-0 h-full w-full object-cover object-center"
                   style={{ "--banner-video-scale": 1.0 }}
                   src={heroBanner.src}

@@ -332,6 +332,40 @@ export default function RootLandingPage() {
         <div className="pointer-events-none absolute inset-x-0 top-0 h-[42rem] bg-[radial-gradient(circle_at_top_left,rgba(236,72,153,0.18),transparent_24%),radial-gradient(circle_at_top_right,rgba(34,211,238,0.16),transparent_24%),linear-gradient(180deg,rgba(255,255,255,0.05),transparent_20%)]" />
 
         <section className="mx-auto w-[95%] md:w-[70%] px-4 pb-12 pt-8 sm:px-6 sm:pb-16 sm:pt-12 lg:px-8 lg:pb-24 lg:pt-20">
+          <div className="flex justify-end mb-2 relative z-50">
+            <div className="relative" data-testid="banner-sizing-control">
+              <button
+                type="button"
+                onClick={(e) => { e.preventDefault(); setReorderOpen((o) => !o); }}
+                className="inline-flex items-center gap-1.5 rounded-full border border-white/20 bg-black/60 px-4 py-2 text-xs font-semibold text-white/90 backdrop-blur-md transition-colors hover:bg-black/80 shadow-[0_0_15px_rgba(56,189,248,0.3)] hover:shadow-[0_0_20px_rgba(56,189,248,0.5)] cursor-pointer"
+                data-testid="banner-reorder-toggle"
+              >
+                <Eye className="h-4 w-4 text-cyan-400" />
+                Ajuster la vidéo
+              </button>
+              {reorderOpen && (
+                <div
+                  className="absolute right-0 top-full mt-2 w-64 rounded-xl border border-white/15 bg-black/90 p-4 shadow-2xl backdrop-blur-xl pointer-events-auto"
+                  data-testid="banner-reorder-panel"
+                >
+                  <label className="text-xs font-semibold text-white/90 mb-2 block">
+                    Zoom Vidéo: {Math.round(videoScale * 100)}%
+                  </label>
+                  <input
+                    type="range"
+                    min="0.5"
+                    max="2.0"
+                    step="0.05"
+                    value={videoScale}
+                    onChange={(e) => setVideoScale(parseFloat(e.target.value))}
+                    className="w-full accent-cyan-400 cursor-pointer pointer-events-auto"
+                    data-testid="banner-size-slider"
+                  />
+                </div>
+              )}
+            </div>
+          </div>
+
           <div className={`${luxurySection} p-2 sm:p-3 lg:p-4`}>
             <div className={luxuryGlowLeft} />
             <div className={luxuryGlowRight} />
@@ -352,7 +386,10 @@ export default function RootLandingPage() {
                   muted
                   loop
                   playsInline
-                  preload="metadata"
+                  preload="auto"
+                  decoding="async"
+                  fetchPriority="high"
+                  disablePictureInPicture
                   data-testid="hero-banner-background-video"
                 />
               ) : (
@@ -364,38 +401,6 @@ export default function RootLandingPage() {
               <div className="hero-banner-darken pointer-events-none absolute inset-0" />
               <div className="hero-banner-specular pointer-events-none absolute inset-0" />
               <div className="hero-banner-color-bloom pointer-events-none absolute inset-0" />
-
-              <div className="absolute right-3 top-3 z-50 pointer-events-auto" data-testid="banner-sizing-control">
-                <button
-                  type="button"
-                  onClick={(e) => { e.preventDefault(); setReorderOpen((o) => !o); }}
-                  className="inline-flex items-center gap-1.5 rounded-full border border-white/20 bg-black/50 px-3 py-1.5 text-xs font-medium text-white/90 backdrop-blur-md transition-colors hover:bg-black/70"
-                  data-testid="banner-reorder-toggle"
-                >
-                  <Eye className="h-3.5 w-3.5" />
-                  Ajuster taille
-                </button>
-                {reorderOpen && (
-                  <div
-                    className="mt-2 w-64 rounded-xl border border-white/15 bg-black/85 p-4 shadow-2xl backdrop-blur-xl pointer-events-auto"
-                    data-testid="banner-reorder-panel"
-                  >
-                    <label className="text-xs font-semibold text-white/90 mb-2 block">
-                      Zoom Vidéo: {Math.round(videoScale * 100)}%
-                    </label>
-                    <input
-                      type="range"
-                      min="0.5"
-                      max="2.0"
-                      step="0.05"
-                      value={videoScale}
-                      onChange={(e) => setVideoScale(parseFloat(e.target.value))}
-                      className="w-full accent-fuchsia-500 cursor-pointer pointer-events-auto"
-                      data-testid="banner-size-slider"
-                    />
-                  </div>
-                )}
-              </div>
 
               <div className="hero-banner-content relative flex min-h-[300px] sm:min-h-[380px] lg:min-h-[420px] flex-col justify-end p-4 sm:p-6 lg:p-8 z-30 pointer-events-none">
                 <div className="flex flex-row flex-wrap gap-2 pointer-events-auto" data-testid="hero-banner-bottom-primary-buttons">

@@ -66,7 +66,11 @@ export const PremiumBorders = () => {
         muted={true}
         loop
         playsInline
+        preload="auto"
+        decoding="async"
+        disablePictureInPicture
         className="absolute inset-0 w-full h-full object-cover z-[-1] opacity-60"
+        style={{ pointerEvents: 'none' }}
       />
       
       {/* Ciel & Nuages (Haut) */}

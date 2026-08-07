@@ -141,7 +141,7 @@ a, button, [role="button"], input, select {
     --theme-neon-b: #f472b6;
     --theme-neon-c: #8b5cf6;
     --theme-noise-opacity: 0.028;
-    --site-tint: radial-gradient(circle at 18% 18%, rgba(56,189,248,0.18) 0%, transparent 24%), radial-gradient(circle at 84% 18%, rgba(244,114,182,0.16) 0%, transparent 22%), linear-gradient(160deg, #0a1020 0%, #10182c 55%, #0a0f1a 100%);
+    --site-tint: linear-gradient(160deg, #020617 0%, #0f172a 55%, #020617 100%);
     --bubble-h: 210;
     --bubble-s: 92%;
     --bubble-l: 58%;

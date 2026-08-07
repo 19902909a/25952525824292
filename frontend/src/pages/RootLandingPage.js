@@ -138,6 +138,7 @@ export default function RootLandingPage() {
 
   const [homeBanners, setHomeBanners] = useState(loadHomeBanners);
   const [reorderOpen, setReorderOpen] = useState(false);
+  const [videoScale, setVideoScale] = useState(1.0);
   const dragIndexRef = useRef(null);
 
   const heroBanner = homeBanners[0];
@@ -344,7 +345,7 @@ export default function RootLandingPage() {
                   ref={bannerVideoRef}
                   key="/custom-hero-banner-web.mp4"
                   className="hero-banner-video absolute inset-0 h-full w-full object-cover object-center"
-                  style={{ "--banner-video-scale": 1.0 }}
+                  style={{ transform: `scale(${videoScale})` }}
                   src={heroBanner.src}
                   autoPlay
                   muted
@@ -370,64 +371,25 @@ export default function RootLandingPage() {
                   className="inline-flex items-center gap-1.5 rounded-full border border-white/20 bg-black/50 px-3 py-1.5 text-xs font-medium text-white/90 backdrop-blur-md transition-colors hover:bg-black/70"
                   data-testid="banner-reorder-toggle"
                 >
-                  <GripVertical className="h-3.5 w-3.5" />
-                  Réorganiser
+                  <Eye className="h-3.5 w-3.5" />
+                  Ajuster taille
                 </button>
                 {reorderOpen && (
                   <div
-                    className="mt-2 w-[min(20rem,80vw)] rounded-xl border border-white/15 bg-black/85 p-2.5 shadow-2xl backdrop-blur-xl"
-                    data-testid="banner-reorder-panel"
+                    className="mt-2 w-64 rounded-xl border border-white/15 bg-black/85 p-4 shadow-2xl backdrop-blur-xl"
                   >
-                    <p className="mb-2 text-[11px] text-white/60">
-                      Glissez pour changer l'ordre · œil pour masquer au public
-                    </p>
-                    <div className="flex flex-col gap-2">
-                      {homeBanners.map((b, i) => (
-                        <div
-                          key={b.id}
-                          draggable
-                          onDragStart={() => handleBannerDragStart(i)}
-                          onDragOver={(e) => e.preventDefault()}
-                          onDrop={() => handleBannerDrop(i)}
-                          className={`flex items-center gap-2 rounded-lg border border-white/15 bg-white/5 p-1.5 transition-colors hover:border-white/30 ${
-                            b.visible === false ? "opacity-50" : ""
-                          }`}
-                          data-testid={`banner-reorder-item-${b.id}`}
-                          title={b.label}
-                        >
-                          <GripVertical className="h-4 w-4 shrink-0 cursor-grab text-white/60 active:cursor-grabbing" />
-                          <video
-                            src={b.src}
-                            muted
-                            playsInline
-                            preload="metadata"
-                            className="pointer-events-none h-10 w-16 shrink-0 rounded object-cover"
-                          />
-                          <div className="min-w-0 flex-1">
-                            <p className="truncate text-[11px] font-semibold text-white">
-                              {BANNER_SLOT_LABELS[i]}
-                            </p>
-                            <p className="truncate text-[10px] text-white/50">
-                              {b.label}
-                              {b.visible === false ? " · masquée" : ""}
-                            </p>
-                          </div>
-                          <button
-                            type="button"
-                            onClick={() => toggleBannerVisible(b.id)}
-                            className="shrink-0 rounded-md p-1.5 text-white/70 transition-colors hover:bg-white/10 hover:text-white"
-                            aria-label={b.visible === false ? "Afficher au public" : "Masquer au public"}
-                            data-testid={`banner-visibility-toggle-${b.id}`}
-                          >
-                            {b.visible === false ? (
-                              <EyeOff className="h-4 w-4" />
-                            ) : (
-                              <Eye className="h-4 w-4" />
-                            )}
-                          </button>
-                        </div>
-                      ))}
-                    </div>
+                    <label className="text-xs font-semibold text-white/90 mb-2 block">
+                      Zoom Vidéo: {Math.round(videoScale * 100)}%
+                    </label>
+                    <input
+                      type="range"
+                      min="0.5"
+                      max="2.0"
+                      step="0.05"
+                      value={videoScale}
+                      onChange={(e) => setVideoScale(parseFloat(e.target.value))}
+                      className="w-full accent-fuchsia-500"
+                    />
                   </div>
                 )}
               </div>
@@ -466,79 +428,7 @@ export default function RootLandingPage() {
           </div>
         </section>
 
-        <section className="mx-auto w-full max-w-6xl px-4 py-14 sm:px-6 sm:py-18 lg:px-8 lg:py-24" data-testid="home-quick-portal-section">
-          <div className={`${luxurySection} p-5 sm:p-7 lg:p-10`}>
-            <div className={luxuryGlowLeft} />
-            <div className={luxuryGlowRight} />
-            <div className="relative">
-              <div className="relative">
-                {portalEntries.map((card, index) => {
-                  const Icon = card.action.icon;
-                  return (
-                    <div key={`${card.testId}-${card.action.to}-${rotationIndex}`} className="relative">
-                      {index === 1 && <FloatingCardsDeco />}
-                      <Link to={card.action.to} className="group block" data-testid={card.testId}>
-                        <Card className={`${luxuryCard} portal-card-neutral-shell`}>
-                        <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(255,255,255,0.04),rgba(255,255,255,0.02))]" />
-                        <div className="grid gap-0 sm:grid-cols-[1.02fr_0.98fr]">
-                          <CardContent className="relative flex flex-col justify-between p-6">
-                            <div className="space-y-4">
-                              <div className={luxuryIcon}>
-                                <Icon className="h-5 w-5 neon-rgb-icon" />
-                              </div>
-                              <div>
-                                <p className="text-[11px] uppercase tracking-[0.28em] text-white/46">{card.subtitle}</p>
-                                <h3 className="mt-2 font-display text-2xl font-black text-white neon-rgb-text-soft">
-                                  <span key={`portal-card-${index}-${card.action.to}-${rotationIndex}`} className="animate-in fade-in zoom-in-95 duration-500">{card.action.label}</span>
-                                </h3>
-                              </div>
-                            </div>
-                            <span className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-white/92">
-                              Ouvrir
-                              <ArrowRight className="h-4 w-4 neon-rgb-icon transition-transform duration-300 group-hover:translate-x-1" />
-                            </span>
-                          </CardContent>
-                          <div className="relative min-h-[220px] overflow-hidden sm:min-h-[250px]" data-testid={`${card.testId}-preview-video-shell`}>
-                            {cardBanners[index] && cardBanners[index].visible !== false ? (
-                              <video
-                                className="portal-card-neutral-video h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-                                src={cardBanners[index].src}
-                                poster={card.image}
-                                autoPlay
-                                muted
-                                loop
-                                playsInline
-                                preload="metadata"
-                                data-testid={`${card.testId}-preview-video`}
-                              />
-                            ) : (
-                              <div
-                                className="h-full w-full bg-cover bg-center"
-                                style={{ backgroundImage: `url(${card.image})` }}
-                                data-testid={`${card.testId}-preview-hidden`}
-                              />
-                            )}
-                            {index === 0 && (
-                              <div
-                                className="pointer-events-none absolute inset-0 mix-blend-color"
-                                style={{
-                                  background:
-                                    "linear-gradient(135deg, rgba(236,72,153,0.1) 0%, rgba(139,92,246,0.1) 35%, rgba(56,189,248,0.1) 70%, rgba(16,185,129,0.1) 100%)",
-                                }}
-                              />
-                            )}
-                            <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_60%,rgba(0,0,0,0.15)_100%)] pointer-events-none" />
-                          </div>
-                        </div>
-                      </Card>
-                    </Link>
-                  </div>
-                  );
-                })}
-              </div>
-            </div>
-          </div>
-        </section>
+
 
         <section className="mx-auto w-full max-w-4xl px-4 py-8 sm:px-6 sm:py-10 lg:px-8 lg:py-12 relative" data-testid="home-platforms-section">
           <div className={`${luxurySection} home-platforms-neutral-shell p-4 sm:p-6 lg:p-8 relative overflow-hidden ring-1 ring-white/10 z-20`}>

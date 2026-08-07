@@ -163,29 +163,31 @@ export const Navbar = () => {
     return () => window.clearInterval(id);
   }, []);
 
-  const renderLogo = (compact = false) => (
+  const renderLogo = () => (
     <Link
       to="/"
       className="group inline-flex min-h-[44px] items-center rounded-full p-0.5"
       aria-label="Lovanet — Portail"
       data-testid="header-home-logo-link"
       onClick={() => setOpen(false)}
+      style={{ perspective: "1000px" }}
     >
-      <span className="relative inline-flex h-11 w-11 items-center justify-center rounded-[1.35rem] border border-white/20 bg-white/10 p-[2px] shadow-[0_0_20px_rgba(96,229,255,0.24)] backdrop-blur-xl transition-[transform,box-shadow,border-color] duration-300 group-hover:-rotate-3 group-hover:border-white/35 group-hover:shadow-[0_0_24px_rgba(96,229,255,0.4),0_0_36px_rgba(186,108,255,0.24)] group-active:scale-95">
-        <span className="absolute inset-[3px] rounded-[1.1rem] bg-[radial-gradient(circle_at_30%_30%,rgba(255,255,255,0.9),rgba(255,255,255,0.18)_26%,rgba(89,204,255,0.26)_58%,rgba(86,35,163,0.38)_100%)] opacity-90" />
-        <span className="absolute inset-[3px] rounded-[1.1rem] border border-white/20" />
-        <span className="absolute -inset-[1px] rounded-[1.4rem] bg-[conic-gradient(from_180deg_at_50%_50%,rgba(94,234,212,0)_0deg,rgba(94,234,212,0.75)_90deg,rgba(186,108,255,0.7)_180deg,rgba(255,255,255,0.12)_270deg,rgba(94,234,212,0)_360deg)] opacity-70 blur-[2px] animate-[rgb-spin_10s_linear_infinite]" />
+      <motion.span 
+        whileHover={{ rotateY: 180, scale: 1.1, rotateX: 10 }}
+        whileTap={{ scale: 0.9 }}
+        transition={{ type: "spring", stiffness: 200, damping: 10 }}
+        className="relative inline-flex h-11 w-11 items-center justify-center rounded-[1.35rem] border border-white/20 bg-white/10 p-[2px] shadow-[0_0_20px_rgba(96,229,255,0.24)] backdrop-blur-xl"
+        style={{ transformStyle: "preserve-3d" }}
+      >
+        <span className="absolute inset-[3px] rounded-[1.1rem] bg-[radial-gradient(circle_at_30%_30%,rgba(255,255,255,0.9),rgba(255,255,255,0.18)_26%,rgba(89,204,255,0.26)_58%,rgba(86,35,163,0.38)_100%)] opacity-90" style={{ transform: "translateZ(-5px)" }} />
+        <span className="absolute -inset-[1px] rounded-[1.4rem] bg-[conic-gradient(from_180deg_at_50%_50%,rgba(94,234,212,0)_0deg,rgba(94,234,212,0.75)_90deg,rgba(186,108,255,0.7)_180deg,rgba(255,255,255,0.12)_270deg,rgba(94,234,212,0)_360deg)] opacity-70 blur-[2px] animate-[rgb-spin_10s_linear_infinite]" style={{ transform: "translateZ(-10px)" }} />
         <img
           src="/lovanet-logo-custom.png"
           alt="Lovanet"
           className="relative z-10 h-full w-full rounded-[1.1rem] object-contain drop-shadow-[0_0_14px_rgba(255,255,255,0.42)]"
+          style={{ transform: "translateZ(10px)" }}
         />
-      </span>
-      {!compact && (
-        <span className="ml-2 hidden text-sm font-black uppercase tracking-[0.18em] sm:inline nav-theme-accent-text">
-          Lovanet
-        </span>
-      )}
+      </motion.span>
     </Link>
   );
 
@@ -368,7 +370,7 @@ export const Navbar = () => {
           </SheetHeader>
           <div className="nav-theme-shell flex h-full flex-col overflow-hidden rounded-[1.75rem] border border-white/20 shadow-2xl relative z-10 bg-gradient-to-b from-black/80 to-background/90 backdrop-blur-3xl">
             <div className="flex items-center justify-between gap-3 border-b border-white/10 px-4 py-4 bg-white/5">
-              {renderLogo(true)}
+              {renderLogo()}
               <div className="flex items-center gap-2">
                 <Badge className="rounded-full border border-white/20 bg-primary/20 px-3 py-1 text-[11px] font-black text-primary animate-pulse">
                   {count} panier

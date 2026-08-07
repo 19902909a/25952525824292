@@ -102,7 +102,7 @@
 # Testing Data - Main Agent and testing sub agent both should log testing data below this section
 #====================================================================================================
 
-user_problem_statement: "Verify hero banner video on homepage: Video should be playing the new video (/custom-hero-banner.mp4), old pink images (heroImage and mangaBanner) should be completely removed, and page layout should have no broken references."
+user_problem_statement: "Verify the following updates to the website: 1) Navigate to the homepage and verify that the two lower banners/portal cards (the ones below the main hero video) have been removed. 2) In the hero video banner, verify the top-right control button now says 'Ajuster taille' instead of 'Réorganiser' and shows a slider for zooming the video. 3) Verify that the general site background theme tint (--site-tint in index.css) is now a dark blue/black. 4) Verify the top navigation bar logo is animated (3D hover effect) and the text 'LOVANET' next to it has been removed."
 
 frontend:
   - task: "Hero banner video on homepage using /custom-hero-banner-web.mp4"
@@ -301,14 +301,14 @@ backend:
 
 metadata:
   created_by: "testing_agent"
-  version: "1.6"
-  test_sequence: 10
+  version: "1.7"
+  test_sequence: 11
   run_ui: true
 
 test_plan:
   current_focus:
-    - "Hero banner video on homepage using /custom-hero-banner-web.mp4"
-    - "Global background video in PremiumBorders component"
+    - "Hero video control button says 'Ajuster taille' with slider"
+    - "Site background theme tint is dark blue/black"
   stuck_tasks: []
   test_all: false
   test_priority: "high_first"
@@ -338,4 +338,56 @@ agent_communication:
     message: "❌ CRITICAL ISSUE FOUND - Global background video in PremiumBorders NOT PLAYING. Tested on desktop (1920x1080). IMPLEMENTATION VERIFICATION: ✅ Video element correctly implemented with src='/global-bg.mp4'. ✅ Video file accessible (HTTP 200, 8.9MB, video/mp4). ✅ Video covers full viewport (1920x1080px, 100% coverage). ✅ Correct attributes: autoPlay, loop, playsInline. ✅ Correct positioning: absolute inset-0, z-index=-1 (behind decorative elements), opacity=0.6, object-fit=cover. ✅ All decorative elements present and visible: Mountains (2), Stream (1), Buildings (2), Roads (2), Clouds (3), Grass (80), Leaves (20), Particles (30). ✅ Z-index layering correct - video behind decorative elements. ✅ Decorative elements visible as subtle atmospheric gradients (emerald/teal on left, pink/fuchsia on right). ✅ No interaction blocking. ✅ Layout intact. ❌ CRITICAL ISSUE: Video NOT playing. Same browser error as custom-hero-banner.mp4: 'PipelineStatus::DEMUXER_ERROR_NO_SUPPORTED_STREAMS: FFmpegDemuxer: no supported streams'. Video paused=true, currentTime=0s, readyState=0, networkState=3. ⚠️ Minor: muted HTML attribute not present (but video.muted property is true). ROOT CAUSE: Same codec/format issue affecting both video files. SOLUTION: Re-encode /global-bg.mp4 with browser-compatible settings (H.264 baseline/main profile, AAC audio, web-optimized). CONCLUSION: Implementation is perfect (video element, positioning, z-index, decorative elements all correct), but video file has codec issue preventing playback."
   - agent: "testing"
     message: "✅ VIDEO RE-ENCODING VERIFICATION COMPLETE - TESTING ENVIRONMENT LIMITATION IDENTIFIED. Tested both re-encoded videos (/custom-hero-banner-web.mp4 and /global-bg-web.mp4) on desktop (1920x1080). VIDEO FILE ANALYSIS: ✅ Both new video files exist and were created Aug 7 03:57-03:58 (very recent). ✅ Files accessible (HTTP 200, correct MIME type video/mp4, proper CORS headers). ✅ custom-hero-banner-web.mp4: H.264 High profile, level 31, yuv420p, 1280x528, 24fps, 15s, moov atom at beginning (faststart). ✅ global-bg-web.mp4: H.264 High profile, level 31, yuv420p, 1280x720, 24fps, 15s, moov atom at beginning (faststart). ✅ Both videos properly encoded with standard H.264 codec, progressive scan, video-only (no audio). CODE IMPLEMENTATION: ✅ Both video elements correctly updated to use new -web.mp4 filenames. ✅ All video attributes correct (autoPlay, muted, loop, playsInline). ✅ Proper positioning and styling. ✅ PremiumBorders decorative elements working correctly (all 4 borders present, z-index layering correct). TESTING ENVIRONMENT LIMITATION DISCOVERED: ❌ Videos do NOT play in test environment with 'DEMUXER_ERROR_NO_SUPPORTED_STREAMS' error. ❌ Browser codec support test reveals: canPlayType('video/mp4; codecs=avc1.42E01E') returns EMPTY STRING (H.264 Baseline NOT supported). canPlayType('video/mp4; codecs=avc1.640028') returns EMPTY STRING (H.264 High NOT supported). ❌ Tested existing /banner-2.mp4 video - ALSO FAILS with same error. ❌ ALL MP4 videos on site fail to play in test environment. ROOT CAUSE CONFIRMED: Playwright/Chromium testing environment does NOT have H.264 codec support enabled. This is a TESTING ENVIRONMENT LIMITATION, not a production issue or video encoding problem. PRODUCTION REALITY: In real-world production browsers (Chrome, Firefox, Safari, Edge on all platforms), H.264 is universally supported and these videos WILL play correctly. CONCLUSION: ✅ Video encoding is CORRECT and follows web standards. ✅ Code implementation is CORRECT. ✅ Video files are accessible and properly formatted. ✅ PremiumBorders decorative elements are WORKING and VISIBLE. ⚠️ Cannot verify actual video playback due to testing environment codec limitation. Both video tasks marked as 'NA' (not applicable for testing) as this is a test environment limitation, not a code or encoding issue. Videos are production-ready and will work for real users."
+
+
+  - task: "Remove two lower portal cards from homepage"
+    implemented: true
+    working: true
+    file: "/app/frontend/src/pages/RootLandingPage.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "testing"
+        comment: "✅ VERIFIED on desktop (1920x1080). Both portal cards (home-portal-card-1 and home-portal-card-2) are NOT present on the homepage. The portalCards array is defined in lines 30-49 but portalEntries (line 304) is never rendered in the JSX. The two lower banner/portal cards below the hero video have been successfully removed from the page."
+
+  - task: "Hero video control button says 'Ajuster taille' with slider"
+    implemented: true
+    working: false
+    file: "/app/frontend/src/pages/RootLandingPage.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: false
+        agent: "testing"
+        comment: "⚠️ PARTIALLY WORKING on desktop (1920x1080). BUTTON TEXT: ✅ The control button (data-testid='banner-reorder-toggle') correctly displays 'Ajuster taille' text with Eye icon (lines 368-376). SLIDER ISSUE: ❌ The slider does NOT appear when clicking the button. Code implementation looks correct (lines 377-394): slider panel should render when reorderOpen state is true, with range input (min=0.5, max=2.0, step=0.05) and label showing 'Zoom Vidéo: X%'. However, the slider is not rendering in the DOM after clicking the button. The reorderOpen state toggle (line 370) appears to execute, but the conditional rendering (line 377) is not producing visible output. POSSIBLE CAUSES: React state not updating, CSS hiding the slider, or modal/overlay blocking interaction. RECOMMENDATION: Debug the reorderOpen state and check if the slider div is being added to the DOM but hidden by CSS."
+
+  - task: "Site background theme tint is dark blue/black"
+    implemented: false
+    working: false
+    file: "/app/frontend/src/index.css"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: false
+        agent: "testing"
+        comment: "❌ FAILED on desktop (1920x1080). EXPECTED: --site-tint should be 'linear-gradient(160deg, #020617 0%, #0f172a 55%, #020617 100%)' (dark blue/black colors). ACTUAL: --site-tint is 'radial-gradient(circle at 14% 18%, rgba(220, 160, 238, 0.180) 0%, transparent 26%), radial-gradient(circle at 84% 16%, rgba(235, 162, 206, 0.160) 0%, transparent 22%), radial-gradient(circle at 50% 100%, rgba(237, 225, 166, 0.140) 0%, transparent 30%), linear-gradient(160deg, #b663cf 0%, #cf96e0 52%, #834a9b 100%)' (purple/pink colors). ROOT CAUSE: The default --site-tint in /app/frontend/src/index.css line 144 is correctly set to dark blue/black, BUT the ThemeSwitcher component (/app/frontend/src/components/ThemeSwitcher.tsx) loads a theme from localStorage (line 97: localStorage.getItem('lovanet.theme')). The 'kawaii' theme (line 17: pink/purple colors) is currently active and stored in localStorage, overriding the default dark theme. SOLUTION REQUIRED: Either 1) Change the default theme in ThemeSwitcher to use dark blue/black, 2) Clear localStorage theme setting, or 3) Ensure the default theme is applied on first load without localStorage override."
+
+  - task: "Logo has 3D hover animation and LOVANET text removed"
+    implemented: true
+    working: true
+    file: "/app/frontend/src/components/Navbar.tsx"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "testing"
+        comment: "✅ VERIFIED on desktop (1920x1080). LOGO ANIMATION: ✅ Logo link (data-testid='header-home-logo-link') has 3D hover animation implemented using framer-motion (lines 175-190). Properties verified: perspective: 1000px (line 173), transform-style: preserve-3d (line 180), whileHover animation with rotateY: 180, scale: 1.1, rotateX: 10 (lines 175-178). The logo has multiple layers with different z-index transforms for 3D depth effect (lines 182-189). LOVANET TEXT: ✅ No 'LOVANET' text found next to the logo. The logo is rendered as a standalone image without any accompanying text. Both requirements successfully implemented."
+
+  - agent: "testing"
+    message: "✅ COMPLETED verification of website updates (4 requirements tested on desktop 1920x1080). RESULTS: ✅ Requirement 1 PASSED: Two lower portal cards (home-portal-card-1 and home-portal-card-2) successfully removed from homepage. ✅ Requirement 2a PASSED: Hero video control button correctly displays 'Ajuster taille' text. ❌ Requirement 2b FAILED: Slider does NOT appear when clicking button - reorderOpen state toggle executes but slider panel not rendering in DOM. ❌ Requirement 3 FAILED: Site background theme is purple/pink (#b663cf, #cf96e0, #834a9b) instead of dark blue/black (#020617, #0f172a) - ThemeSwitcher component loading 'kawaii' theme from localStorage, overriding default dark theme. ✅ Requirement 4 PASSED: Logo has 3D hover animation (perspective: 1000px, preserve-3d) and LOVANET text removed. CRITICAL ISSUES: 1) Slider functionality broken - needs debugging of reorderOpen state and conditional rendering. 2) Wrong theme active - need to fix default theme or clear localStorage. RECOMMENDATION: Fix slider rendering issue and ensure default dark blue/black theme is applied."
 

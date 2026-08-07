@@ -120,6 +120,18 @@ frontend:
         agent: "testing"
         comment: "RE-TESTED after video re-encoding to /custom-hero-banner-web.mp4 (desktop 1920x1080). VIDEO FILE VERIFICATION: ✅ New video file exists (6.1MB, created Aug 7 03:58). ✅ File accessible (HTTP 200, content-type: video/mp4). ✅ Properly encoded: H.264 High profile, level 31, yuv420p, 1280x528, 24fps, 15s duration, moov atom at beginning (faststart enabled). ✅ Video-only (no audio), progressive scan. ✅ MIME type correct, CORS headers correct. CODE IMPLEMENTATION: ✅ Video element correctly updated to use '/custom-hero-banner-web.mp4'. ✅ Video element has correct attributes: autoPlay, muted, loop, playsInline, preload='metadata'. ✅ Video element visible (1246x420px). ✅ No JavaScript errors. TESTING ENVIRONMENT LIMITATION: ❌ Video does NOT play in test environment with error 'DEMUXER_ERROR_NO_SUPPORTED_STREAMS'. ❌ Browser codec support test shows H.264 codecs NOT supported (canPlayType returns empty string for 'avc1.42E01E' and 'avc1.640028'). ❌ ALL MP4 videos on site fail with same error (tested /banner-2.mp4, same result). ROOT CAUSE: Playwright/Chromium testing environment lacks H.264 codec support. This is a TESTING ENVIRONMENT LIMITATION, not a production issue. PRODUCTION REALITY: In real-world browsers (Chrome, Firefox, Safari, Edge), H.264 is universally supported and videos WILL play correctly. CONCLUSION: ✅ Video encoding is CORRECT. ✅ Code implementation is CORRECT. ✅ Video files are accessible and properly formatted. ⚠️ Cannot verify actual playback due to testing environment codec limitation. Status set to 'NA' (not applicable for testing) as this is a test environment limitation, not a code or encoding issue. Videos will work in production."
   
+  - task: "Hero banner video dimensions (45% width, 480px height on desktop)"
+    implemented: true
+    working: true
+    file: "/app/frontend/src/pages/RootLandingPage.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "testing"
+        comment: "✅ VERIFIED hero banner video dimensions on desktop (1920x1080). DIMENSION VERIFICATION: ✅ Section width: 864.00px (exactly 45.0% of 1920px viewport). ✅ Shell height: 480.00px (min-h-[480px] applied correctly). ✅ Video element dimensions: 766.00px × 480.00px. IMPLEMENTATION DETAILS: ✅ Section uses 'lg:w-[45%]' class (line 334 in RootLandingPage.js). ✅ Shell uses 'lg:min-h-[480px]' class (line 375 in RootLandingPage.js). ✅ Content area also uses 'lg:min-h-[480px]' (line 405). LAYOUT INTEGRITY: ✅ Hero banner visible and properly positioned. ✅ Primary CTA button present and functional. ✅ Secondary CTA button present and functional. ✅ Video control button ('Ajuster la vidéo') present. ✅ No horizontal scroll detected (body scroll width = client width = 1920px). ✅ Layout contained properly within viewport. ✅ No console errors. VISUAL VERIFICATION: ✅ Hero banner is centered on page. ✅ Takes up approximately 45% of screen width as required. ✅ Has increased vertical height (480px) as required. ✅ Layout is clean and not broken. CONCLUSION: Hero banner video dimensions are correctly implemented. Width is exactly 45% of viewport on desktop (864px on 1920px screen), height is exactly 480px minimum. Layout integrity maintained with no overflow or breaking issues."
+  
   - task: "Hub Ferry component centered and full-width on /decouvrir page"
     implemented: true
     working: true
@@ -301,8 +313,8 @@ backend:
 
 metadata:
   created_by: "testing_agent"
-  version: "1.8"
-  test_sequence: 12
+  version: "1.9"
+  test_sequence: 13
   run_ui: true
 
 test_plan:
@@ -315,6 +327,8 @@ test_plan:
   test_priority: "high_first"
 
 agent_communication:
+  - agent: "testing"
+    message: "✅ HERO BANNER VIDEO DIMENSIONS VERIFIED AND WORKING! Tested on desktop (1920x1080). DIMENSION VERIFICATION: ✅ Section width is exactly 864.00px (45.0% of 1920px viewport) - matches requirement of 45%-50% width. ✅ Shell height is exactly 480.00px - matches requirement of min-h-[480px]. ✅ Video element dimensions: 766.00px × 480.00px. IMPLEMENTATION: Uses 'lg:w-[45%]' for section width and 'lg:min-h-[480px]' for shell height. LAYOUT INTEGRITY: ✅ Hero banner visible and centered. ✅ All buttons present and functional. ✅ No horizontal scroll. ✅ No console errors. ✅ Layout clean and not broken. CONCLUSION: Hero banner video now has increased vertical height (480px) and reduced horizontal width (45% of screen) on desktop as required. Layout is intact and working perfectly."
   - agent: "testing"
     message: "✅ COMPLETED Hub Ferry component centering verification on /decouvrir page. Tested on desktop (1920x1080). VERIFICATION RESULTS: ✅ Component is PERFECTLY CENTERED with 0.0px offset from parent center. ✅ Takes up LARGE WIDTH at 97.7% of parent container (1368px / 1400px). ✅ NOT in right column - starts at 14.4% of viewport width. ✅ Parent container uses 'container mx-auto' for centering with max-width 1400px. ✅ Component uses 'w-full' class to span full container width. ✅ No layout issues detected. ✅ No console errors. CONCLUSION: Hub Ferry component layout is working correctly - centered horizontally and taking up large width across the page as intended. The component is not squished into any column and displays prominently in the center of the page."
   - agent: "testing"

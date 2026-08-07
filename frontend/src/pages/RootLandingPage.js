@@ -51,7 +51,7 @@ const portalCards = [
 
 const platformCards = [
   { title: "Prime Vidéo", testId: "home-platform-card-prime", to: "/prime-video" },
-  { title: "TikTok", testId: "home-platform-card-tiktok", to: "/tiktok" },
+  { title: "", testId: "home-platform-card-tiktok", to: "/tiktok" },
   { title: "Catalogue", testId: "home-platform-card-catalogue", to: "/anime-catalog" },
   { title: "À venir", testId: "home-platform-card-upcoming", to: "/anime-countdown" },
 ];
@@ -464,7 +464,7 @@ export default function RootLandingPage() {
                         >
                           <Icon className="h-3.5 w-3.5 text-white/80 group-hover:text-fuchsia-300 transition-colors drop-shadow-[0_0_5px_currentColor]" />
                         </motion.div>
-                        <p className="text-[11px] sm:text-xs font-semibold text-white/90 truncate">{card.title}</p>
+                        {card.title && <p className="text-[11px] sm:text-xs font-semibold text-white/90 truncate">{card.title}</p>}
                       </div>
                     </Link>
                   );

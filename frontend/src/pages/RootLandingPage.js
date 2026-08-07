@@ -11,8 +11,6 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { usePortalAudio } from "@/hooks/usePortalAudio";
-import heroImage from "@/assets/anime-moments-hero.jpg";
-import mangaBanner from "@/assets/manga-banner.jpg";
 import { FloatingCardsDeco } from "@/components/BreakoutDecorations";
 
 const rotatingPortalDestinations = [
@@ -33,9 +31,9 @@ const portalCards = [
   {
     title: "Boutique immersive",
     subtitle: "",
-    description: "Sélection produits, drops et pièces collector mises à jour en continu.",
-    image: heroImage,
-    video: "/banner-seq-2.mp4",
+    description: "Sélection produits, drops et pièces mises à jour en continu.",
+    image: "",
+    video: "",
     testId: "home-portal-card-1",
     to: "/shop",
   },
@@ -43,8 +41,8 @@ const portalCards = [
     title: "Prime & vidéos",
     subtitle: "",
     description: "Lecture premium, extraits et navigation multi-plateforme.",
-    image: mangaBanner,
-    video: "/banner-seq-3.mp4",
+    image: "",
+    video: "",
     testId: "home-portal-card-2",
     to: "/prime-video",
   },
@@ -101,9 +99,9 @@ const catalogBatchSize = 12;
 const catalogRowSize = 6;
 // Home banners: index 0 -> Hero, index 1 -> Portal card 1, index 2 -> Portal card 2.
 const DEFAULT_HOME_BANNERS = [
-  { id: "b1", src: "/home-banner.mp4", label: "Bannière hero (haut)" },
-  { id: "b2", src: "/banner-top.mp4", label: "Carte du haut" },
-  { id: "b3", src: "/banner-bottom.mp4", label: "Carte Prime & vidéos (bas)" },
+  { id: "b1", src: "/custom-hero-banner.mp4", label: "Bannière hero (haut)" },
+  { id: "b2", src: "", label: "Carte du haut" },
+  { id: "b3", src: "", label: "Carte Prime & vidéos (bas)" },
 ];
 const BANNER_STATE_KEY = "lovanet.home.banners.v2";
 const BANNER_SLOT_LABELS = ["Emplacement 1 · Hero", "Emplacement 2 · Carte", "Emplacement 3 · Carte"];
@@ -344,11 +342,10 @@ export default function RootLandingPage() {
               {heroBanner && heroBanner.visible !== false ? (
                 <video
                   ref={bannerVideoRef}
-                  key="/home-banner.mp4"
+                  key="/custom-hero-banner.mp4"
                   className="hero-banner-video absolute inset-0 h-full w-full object-cover object-center"
                   style={{ "--banner-video-scale": 1.0 }}
-                  src="/home-banner.mp4"
-                  poster={heroImage}
+                  src={heroBanner.src}
                   autoPlay
                   muted
                   loop
@@ -358,8 +355,7 @@ export default function RootLandingPage() {
                 />
               ) : (
                 <div
-                  className="absolute inset-0 h-full w-full bg-cover bg-center"
-                  style={{ backgroundImage: `url(${heroImage})` }}
+                  className="absolute inset-0 h-full w-full bg-cover bg-center bg-black/80"
                   data-testid="hero-banner-hidden-placeholder"
                 />
               )}
@@ -546,16 +542,6 @@ export default function RootLandingPage() {
 
         <section className="mx-auto w-full max-w-4xl px-4 py-8 sm:px-6 sm:py-10 lg:px-8 lg:py-12 relative" data-testid="home-platforms-section">
           <div className={`${luxurySection} home-platforms-neutral-shell p-4 sm:p-6 lg:p-8 relative overflow-hidden ring-1 ring-white/10 z-20`}>
-            <video
-              className="absolute inset-0 h-[80%] w-[80%] m-auto object-cover rounded-2xl mix-blend-screen opacity-100 filter brightness-125 shadow-2xl"
-              src="/banner-3.mp4"
-              poster={heroImage}
-              autoPlay
-              muted
-              loop
-              playsInline
-              preload="metadata"
-            />
             <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(6,14,26,0.1)_0%,rgba(6,14,26,0.85)_100%)]" />
             <div className="relative">
               <div className="relative mb-8 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">

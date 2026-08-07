@@ -102,9 +102,21 @@
 # Testing Data - Main Agent and testing sub agent both should log testing data below this section
 #====================================================================================================
 
-user_problem_statement: "Verify Hub Ferry component centering on /decouvrir page: Component should be centered horizontally and take up large width across the page (not squished into right column)."
+user_problem_statement: "Verify hero banner video on homepage: Video should be playing the new video (/custom-hero-banner.mp4), old pink images (heroImage and mangaBanner) should be completely removed, and page layout should have no broken references."
 
 frontend:
+  - task: "Hero banner video on homepage using /custom-hero-banner.mp4"
+    implemented: true
+    working: false
+    file: "/app/frontend/src/pages/RootLandingPage.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: false
+        agent: "testing"
+        comment: "TESTED hero banner video implementation on homepage (desktop 1920x1080). TECHNICAL VERIFICATION: ✅ Video element present with data-testid='hero-banner-background-video'. ✅ Video src correctly set to '/custom-hero-banner.mp4'. ✅ Video file exists and is accessible (HTTP 200, 8.5MB, content-type: video/mp4). ✅ Video element has correct attributes: autoplay=true, muted=true, loop=true. ✅ Video element is visible (1246x420px dimensions). ❌ CRITICAL ISSUE: Video is NOT playing. Browser error: 'PipelineStatus::DEMUXER_ERROR_NO_SUPPORTED_STREAMS: FFmpegDemuxer: no supported streams'. ❌ Video codec/format is not supported by browser. File appears to be valid MP4 with H.264 (avc1) codec based on file header, but browser cannot decode it. ROOT CAUSE: Video file may be corrupted, have unsupported audio codec, or encoding parameters incompatible with browser playback. SOLUTION REQUIRED: Re-encode /custom-hero-banner.mp4 with browser-compatible settings (H.264 baseline/main profile, AAC audio, web-optimized). OLD IMAGES VERIFICATION: ✅ No old heroImage (anime-moments-hero.jpg) found on page. ✅ No old mangaBanner (manga-banner.jpg) found on page. ✅ No elements with old background images detected. LAYOUT VERIFICATION: ✅ Page layout intact, no broken references. ✅ Main content visible and functional. ✅ Portal cards do not use old images. CONCLUSION: Implementation is correct (video element with correct src), but video file itself is not playable in browser due to codec/format issue."
+  
   - task: "Hub Ferry component centered and full-width on /decouvrir page"
     implemented: true
     working: true
@@ -271,13 +283,13 @@ backend:
 
 metadata:
   created_by: "testing_agent"
-  version: "1.5"
-  test_sequence: 9
+  version: "1.6"
+  test_sequence: 10
   run_ui: true
 
 test_plan:
   current_focus:
-    - "Hub Ferry component centered and full-width on /decouvrir page"
+    - "Hero banner video on homepage using /custom-hero-banner.mp4"
   stuck_tasks: []
   test_all: false
   test_priority: "high_first"
@@ -301,4 +313,6 @@ agent_communication:
     message: "✅ Z-INDEX FIX VERIFIED - BORDERS NOW VISIBLE! Tested on desktop (1920x1080) after main agent applied z-index fix. Z-INDEX LAYERING CONFIRMED: ✅ PremiumBorders z-index: 0 (TOP LAYER - correctly positioned above body pseudo-elements). ✅ body::after z-index: -1 (noise overlay). ✅ body::before z-index: -2 (site-tint gradient, BOTTOM). BORDER VISIBILITY CONFIRMED: ✅ Left border (Mountain/Stream): 288x1080px, opacity=1, 23 children. Background: linear-gradient(90deg, rgba(16,185,129,0.15) 0%, transparent 100%) - emerald/teal gradient VISIBLE. ✅ Right border (Cityscape): 288x1080px, opacity=1, 35 children. Background: linear-gradient(-90deg, rgba(236,72,153,0.15) 0%, transparent 100%) - pink/fuchsia gradient VISIBLE. ✅ Top border (Clouds): 1920x432px, opacity=1, 3 children. ✅ Bottom border (Grass): 1920x216px, opacity=1, 80 children. DECORATIVE ELEMENTS RENDERING: ✅ Mountains: 3 elements with emerald/teal colors. ✅ Buildings: 17 elements with indigo/fuchsia colors. ✅ Clouds: 3 animated elements. ✅ Grass: 80 animated blades. ✅ Leaves: 20 animated falling leaves. ✅ Particles: 30 animated energy particles. ✅ Stream: Animated water element with cyan gradient. ✅ Road lines: 2 animated traffic lines (cyan/pink). VISUAL VERIFICATION: ✅ Left edge shows emerald/teal gradient representing mountain/stream nature theme. ✅ Right edge shows pink/fuchsia gradient representing cyberpunk cityscape theme. ✅ Borders appear as subtle, atmospheric 2.5D decorations on viewport edges. ✅ No interaction blocking - pointer-events-none working correctly. ✅ Layout not broken - main content fully visible and accessible. ✅ No console errors. CONCLUSION: The z-index fix successfully resolved the visibility issue. PremiumBorders decorative elements are now visible as intended - appearing as subtle, atmospheric gradients and animated shapes on the left (nature/mountain theme with emerald/teal colors) and right (cyberpunk cityscape with pink/purple colors) edges of the viewport. The 2.5D decoration system is working correctly, providing visual depth without being distracting or blocking content. All requirements met: borders visible on wide screens, no interaction blocking, layout intact."
   - agent: "testing"
     message: "✅ COMPLETED TEXT REMOVAL VERIFICATION on /decouvrir page. Tested on desktop (1920x1080). Navigated to https://complete-site-build-1.preview.emergentagent.com/decouvrir and verified all requested text removals. VERIFICATION RESULTS: ✅ 'lovanet — le hub officiel' text NOT FOUND on page - successfully removed. ✅ 'Tout l'univers Lovanet en un clic' text NOT FOUND on page - successfully removed. ✅ 'Sections dédiées' heading NOT FOUND on page - successfully removed. ✅ 'Chaque univers a sa propre page' subtitle NOT FOUND on page - successfully removed. ✅ 'Explorer le catalogue' button NOT FOUND on page - successfully removed. ✅ 'collector' word NOT FOUND in Boutique buttons - successfully removed from all 2 Boutique buttons found. PAGE CONTENT VERIFIED: Main heading displays 'Anime.Moments.officiel : Lovanet Univers'. Section cards display correctly with proper navigation links. No unwanted or old text present. Page loads and renders correctly. All requested text removals have been successfully implemented and verified. No issues found."
+  - agent: "testing"
+    message: "❌ CRITICAL ISSUE FOUND - Hero banner video on homepage NOT PLAYING. Tested on desktop (1920x1080). IMPLEMENTATION VERIFICATION: ✅ Video element present with data-testid='hero-banner-background-video'. ✅ Video src correctly set to '/custom-hero-banner.mp4'. ✅ Video file exists and is accessible (HTTP 200, 8.5MB, content-type: video/mp4). ✅ Video element has correct attributes: autoplay=true, muted=true, loop=true. ✅ Video element is visible (1246x420px dimensions). ❌ CRITICAL ISSUE: Video is NOT playing. Browser error: 'PipelineStatus::DEMUXER_ERROR_NO_SUPPORTED_STREAMS: FFmpegDemuxer: no supported streams'. ❌ Video codec/format is not supported by browser. File appears to be valid MP4 with H.264 (avc1) codec based on file header, but browser cannot decode it. ROOT CAUSE: Video file may be corrupted, have unsupported audio codec, or encoding parameters incompatible with browser playback. SOLUTION REQUIRED: Re-encode /custom-hero-banner.mp4 with browser-compatible settings (H.264 baseline/main profile, AAC audio, web-optimized with faststart flag). OLD IMAGES VERIFICATION: ✅ No old heroImage (anime-moments-hero.jpg) found on page. ✅ No old mangaBanner (manga-banner.jpg) found on page. ✅ No elements with old background images detected. LAYOUT VERIFICATION: ✅ Page layout intact, no broken references. ✅ Main content visible and functional. ✅ Portal cards do not use old images. CONCLUSION: Implementation is correct (video element with correct src, old images removed), but video file itself is not playable in browser due to codec/format issue. The video needs to be re-encoded with proper web-compatible settings."
 

@@ -210,6 +210,64 @@ export const Onboarding3D = () => {
   const [step, setStep] = useState(0);
   const [isSpeaking, setIsSpeaking] = useState(true);
   const [minimized, setMinimized] = useState(false);
+  const [chatInput, setChatInput] = useState("");
+  const [chatResponse, setChatResponse] = useState("");
+  const [isTyping, setIsTyping] = useState(false);
+  const [botId, setBotId] = useState("lova-bot");
+  const messagesEndRef = useRef(null);
+
+  useEffect(() => {
+    // Determine current bot ID based on step
+    if (step === 0) setBotId("lova-bot");
+    if (step === 1) setBotId("lova-ai");
+    if (step === 2) setBotId("lova-king");
+    setChatResponse(""); // Reset chat when switching bots
+  }, [step]);
+
+  const handleSendChat = async (e) => {
+    e.preventDefault();
+    if (!chatInput.trim()) return;
+    
+    const userMsg = chatInput.trim();
+    setChatInput("");
+    setChatResponse("");
+    setIsTyping(true);
+    setIsSpeaking(true);
+
+    try {
+      const res = await fetch(process.env.REACT_APP_BACKEND_URL + "/api/chat/lovanet", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          bot_type: botId,
+          messages: [{ role: "user", content: userMsg }]
+        })
+      });
+
+      if (!res.body) throw new Error("No body");
+      const reader = res.body.getReader();
+      const decoder = new TextDecoder("utf-8");
+
+      setIsTyping(false);
+
+      let accumulated = "";
+      while (true) {
+        const { value, done } = await reader.read();
+        if (done) break;
+        accumulated += decoder.decode(value, { stream: true });
+        setChatResponse(accumulated);
+        if (messagesEndRef.current) {
+          messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
+        }
+      }
+    } catch (err) {
+      console.error(err);
+      setChatResponse("Erreur de connexion avec mes circuits.");
+      setIsTyping(false);
+    }
+    
+    setTimeout(() => setIsSpeaking(false), 2000);
+  };
 
   useEffect(() => {
     const hasSeen = localStorage.getItem("lovanet_bots_intro_v5");
@@ -234,7 +292,8 @@ export const Onboarding3D = () => {
   };
 
   const handleClose = () => {
-    setIsVisible(false);
+    setMinimized(true);
+    localStorage.setItem("lovanet_bots_intro_v5", "true");
   };
 
   if (!isVisible) return null;
@@ -296,23 +355,47 @@ export const Onboarding3D = () => {
             </Canvas>
           </div>
 
-          <div className="p-5 text-center relative z-10 border-t border-white/10 bg-black/60">
+          <div className="p-5 text-center relative z-10 border-t border-white/10 bg-black/60 flex flex-col justify-end">
             <h3 className={`text-xl font-black text-transparent bg-clip-text bg-gradient-to-r ${currentData.color} mb-2 flex items-center justify-center gap-2`}>
               <span className={`text-${currentData.color.split(' ')[1].replace('to-', '')}`}><SparkleIcon className="w-4 h-4" /></span>
               {currentData.name}
             </h3>
-            <p className="text-xs text-white/80 mb-5 leading-relaxed min-h-[48px]">
-              {currentData.text}
-            </p>
             
-            <div className="flex justify-between items-center w-full">
+            <div className="text-xs text-white/80 mb-3 text-left leading-relaxed min-h-[48px] max-h-[80px] overflow-y-auto custom-scrollbar bg-white/5 p-2 rounded-lg border border-white/10">
+              {chatResponse ? chatResponse : (isTyping ? "..." : currentData.text)}
+              <div ref={messagesEndRef} />
+            </div>
+
+            <form onSubmit={handleSendChat} className="flex gap-2 mb-4 relative z-20">
+              <input 
+                type="text" 
+                value={chatInput}
+                onChange={(e) => setChatInput(e.target.value)}
+                placeholder={`Demander à ${currentData.name}...`}
+                className="flex-1 bg-black/50 border border-white/20 rounded-full px-3 py-1.5 text-xs text-white placeholder:text-white/40 focus:outline-none focus:border-cyan-400"
+              />
+              <button 
+                type="submit" 
+                disabled={isTyping || !chatInput.trim()}
+                className={`px-3 rounded-full bg-gradient-to-r ${currentData.color} text-white font-bold text-xs shadow-lg disabled:opacity-50 transition-all`}
+              >
+                Envoyer
+              </button>
+            </form>
+            
+            <div className="flex justify-between items-center w-full mt-auto">
               <div className="flex gap-2">
                 {stepsData.map((_, i) => (
-                  <div key={i} className={`w-2 h-2 rounded-full transition-all duration-300 ${i === step ? 'bg-gradient-to-r ' + currentData.color + ' w-4' : 'bg-white/20'}`} />
+                  <button 
+                    key={i} 
+                    onClick={() => { setStep(i); setChatResponse(""); }}
+                    className={`w-2 h-2 rounded-full transition-all duration-300 ${i === step ? 'bg-gradient-to-r ' + currentData.color + ' w-4' : 'bg-white/20'}`} 
+                    aria-label={`Bot ${i + 1}`}
+                  />
                 ))}
               </div>
-              <Button onClick={handleNext} size="sm" className={`h-8 text-xs rounded-full bg-gradient-to-r ${currentData.color} border-none font-bold text-white shadow-lg hover:brightness-110 transition-all`}>
-                {step < stepsData.length - 1 ? "Suivant" : "Fermer"} <ArrowRight className="w-3.5 h-3.5 ml-1.5" />
+              <Button onClick={handleClose} size="sm" className="h-8 text-xs rounded-full bg-white/10 border border-white/20 font-bold text-white hover:bg-white/20 transition-all">
+                Masquer <X className="w-3.5 h-3.5 ml-1.5" />
               </Button>
             </div>
           </div>

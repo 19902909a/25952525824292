@@ -338,9 +338,11 @@ export const Onboarding3D = () => {
   const [isSpeaking, setIsSpeaking] = useState(true);
 
   useEffect(() => {
+    // Disabled onboarding modal temporarily so it doesn't block interactions
     const hasSeen = localStorage.getItem("lovanet_onboarding_seen_v4");
     if (!hasSeen) {
-      setTimeout(() => setIsVisible(true), 1500);
+      // setTimeout(() => setIsVisible(true), 1500);
+      localStorage.setItem("lovanet_onboarding_seen_v4", "true");
     }
   }, []);
 

@@ -101,7 +101,7 @@ const STORAGE_KEY = "lovanet:theme-v2";
 const FAVORITES_KEY = "lovanet:theme-favorites";
 const RECENTS_KEY = "lovanet:theme-recents";
 const NAV_MODE_KEY = "lovanet:nav-theme-mode";
-const DEFAULT_THEME_ID = "azure-cosmic-rgb";
+const DEFAULT_THEME_ID = "cobalt-cosmic-rgb";
 const RECENT_LIMIT = 18;
 const BRIGHT_TEXT = "#f7faff";
 const DARK_TEXT = "#0b1020";
@@ -621,7 +621,8 @@ export const ThemeBubble = () => {
   }, []);
 
   useEffect(() => {
-    const savedTheme = typeof window !== "undefined" ? window.localStorage.getItem(STORAGE_KEY) : null;
+    if (typeof window !== "undefined") window.localStorage.removeItem(STORAGE_KEY);
+    const savedTheme = null;
     const savedNavMode = typeof window !== "undefined" ? window.localStorage.getItem(NAV_MODE_KEY) : null;
     const mode = NAV_PREVIEW_MODES.some((item) => item.id === savedNavMode) ? (savedNavMode as NavPreviewMode) : "derived";
     const theme = THEME_CATALOG.find((item) => item.id === savedTheme) ?? THEME_CATALOG.find((item) => item.id === DEFAULT_THEME_ID) ?? THEME_CATALOG[0];

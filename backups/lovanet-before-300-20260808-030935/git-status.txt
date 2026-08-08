@@ -1,0 +1,30 @@
+ M frontend/src/App.tsx
+ M frontend/src/components/AnimeMomentsPresentation.tsx
+ M frontend/src/components/Footer.tsx
+ M frontend/src/components/HeroCarousel.tsx
+ M frontend/src/components/MangaUniverseBanner.tsx
+ M frontend/src/components/Navbar.tsx
+ M frontend/src/components/PageShell.tsx
+ M frontend/src/components/PremiumBorders.js
+ M frontend/src/components/TabletTrailerPlayer.tsx
+ M frontend/src/index.css
+ M frontend/src/pages/Actualites.tsx
+ M frontend/src/pages/AnimeCountdown.tsx
+ M frontend/src/pages/ChaineYoutube.tsx
+ M frontend/src/pages/Index.tsx
+ M frontend/src/pages/LecteursVideo.tsx
+ M frontend/src/pages/RootLandingPage.js
+ M frontend/src/pages/Tiktok.tsx
+?? backups/
+?? frontend/public/actualites-banner-2.mp4
+?? frontend/public/actualites-banner.mp4
+?? frontend/public/manga-universe-banner.mp4
+?? frontend/src/components/GDriveCinematicBanner.tsx
+?? frontend/src/components/Mobile3DSettingsToggle.tsx
+?? frontend/src/components/MobileNavFloater.tsx
+?? frontend/src/components/NavSuggestionsBar.tsx
+?? frontend/src/components/NavSuggestionsIndicator.tsx
+?? frontend/src/components/ThemeDecorManager.tsx
+?? frontend/src/components/ThemeDecorOverlay.tsx
+?? frontend/src/components/TopVideoBanner.tsx
+?? frontend/src/contexts/PerformanceContext.tsx
